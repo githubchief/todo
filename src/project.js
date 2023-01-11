@@ -3,23 +3,23 @@ const project = (item) => {
     this.title = item.title;
     this.projectTasks = [];
 
-    const getTitle = () => {
+    const getProjectTitle = () => {
         return this.title;
     }
 
-    const getTasks = () => {
+    const getProjectTasks = () => {
         return this.projectTasks;
     }
 
-    const setTitle = (temp) => {
+    const setProjectTitle = (temp) => {
         title = temp;
     }
 
-    const setTask = (tempTask) => {
+    const setProjectTasks = (tempTask) => {
         projectTasks.push(tempTask);
     }
 
-    return {getTasks, getTitle, setTitle, setTask};
+    return { getProjectTasks, getProjectTitle, setProjectTasks, setProjectTitle};
 
 };
 
