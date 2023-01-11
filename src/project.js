@@ -1,6 +1,6 @@
-const project = (item) => {
+const project = (title) => {
 
-    this.title = item.title;
+    this.title = title;
     this.projectTasks = [];
 
     const getProjectTitle = () => {
