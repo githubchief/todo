@@ -3,24 +3,24 @@ const task = (item) => {
     this.title = item.title;
     this.description = item.description;
 
-    const getTitle = () => {
+    const getTaskTitle = () => {
         return title;
     }
 
-    const getDesription = () => {
+    const getTaskDesription = () => {
         return description;
     }
 
-    const setTitle = (temp) => {
+    const setTaskTitle = (temp) => {
         title = temp;
     }
 
-    const setDescription = (temp) => {
+    const setTaskDescription = (temp) => {
         description = temp;
     }
 
 
-    return {getTitle, getDesription, setDescription, setTitle};
+    return {getTaskTitle, getTaskDesription, setTaskDescription, setTaskTitle};
 };
 
 export { task };
