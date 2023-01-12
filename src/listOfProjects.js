@@ -10,16 +10,14 @@ const listOfProjects = (() => {
     }
 
     const getProjects = () => {
+        return projectList;
+    }
 
-        let projectTitles = [];
-        projectList.forEach(element => {
-            projectTitles.push(element.getProjectTitle());
-        });
-         
-        return projectTitles;
-        }
+    const deleteProject = (tempPrj) => {
+        projectList = projectList.filter(prj => prj.getProjectTitle() !== tempPrj.getProjectTitle());
+    }
 
-    return {setProject, getProjects};
+    return {setProject, getProjects, deleteProject};
 
 }) ();
 
