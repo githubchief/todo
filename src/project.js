@@ -1,14 +1,14 @@
-const project = (title) => {
+const project = (prjTitle) => {
 
-    this.title = title;
-    this.projectTasks = [];
+    let title = prjTitle;
+    let projectTasks = [];
 
     const getProjectTitle = () => {
-        return this.title;
+        return title;
     }
 
-    const getProjectTasks = () => {
-        return this.projectTasks;
+    const getProjectTasks = () => {         
+        return projectTasks;
     }
 
     const setProjectTitle = (temp) => {
