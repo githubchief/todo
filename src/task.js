@@ -1,26 +1,52 @@
+import format from "date-fns/format";
 const task = (item) => {
-
-    this.title = item.title;
-    this.description = item.description;
+    
+    let taskTitle = item.title;
+    let taskDescription = item.description;
+    let dueDate = format(new Date(), 'dd/mm/yyyy');
+    let important = false;
 
     const getTaskTitle = () => {
-        return title;
+        return taskTitle;
     }
 
     const getTaskDesription = () => {
-        return description;
+        return taskDescription;
+    }
+
+    const getDueDate = () => {
+        return  dueDate;
+    }
+
+    const getImportance = () => {
+        return important;
     }
 
     const setTaskTitle = (temp) => {
-        title = temp;
+        taskTitle = temp;
     }
 
     const setTaskDescription = (temp) => {
-        description = temp;
+        taskDescription = temp;
     }
 
+    const setDueDate = (temp) => {
+        dueDate = temp;
+    }
 
-    return {getTaskTitle, getTaskDesription, setTaskDescription, setTaskTitle};
+    const setImportance = (temp) => {
+        important = temp;
+    }
+
+    return {getTaskTitle, 
+            getTaskDesription, 
+            getDueDate,
+            getImportance,
+            setTaskDescription, 
+            setTaskTitle,
+            setDueDate,
+            setImportance
+            };
 };
 
 export { task };
