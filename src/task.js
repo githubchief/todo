@@ -3,7 +3,7 @@ const task = (item) => {
     
     let taskTitle = item.title;
     let taskDescription = item.description;
-    let dueDate = format(new Date(), 'dd/mm/yyyy');
+    let dueDate = format(new Date(), 'MM/dd/yyyy');
     let important = false;
 
     const getTaskTitle = () => {
