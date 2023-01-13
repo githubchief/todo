@@ -1,6 +1,6 @@
 import { project } from "./project";
 
-const listOfProjects = (() => {
+const listOfProjects = () => {
 
     let projectList=[];
 
@@ -17,8 +17,12 @@ const listOfProjects = (() => {
         projectList = projectList.filter(prj => prj.getProjectTitle() !== tempPrj.getProjectTitle());
     }
 
-    return {setProject, getProjects, deleteProject};
+    const getProjectByName = (prjName) => {
+            return projectList.find(p => p.getProjectTitle() === prjName);
+    }
 
-}) ();
+    return {setProject, getProjects, deleteProject, getProjectByName};
+
+};
 
 export { listOfProjects };
