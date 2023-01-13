@@ -1,4 +1,20 @@
 body {
-    background-color: rgb(239, 239, 239);
+    background-color: rgb(253, 253, 253);
     color: rgb(0, 0, 0);
+}
+
+#tempForms {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+#todoList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+#project-list {
+    background-color: rgb(101, 205, 205);
 }
