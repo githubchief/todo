@@ -1,3 +1,8 @@
-import './style.css';
+import { listOfProjects } from "./listOfProjects";
+import { task } from "./task";
+import { Dom } from "./uiRender";
+import "./style.css";
 
-console.log("hello");
+let dom = Dom();
+dom.display();
+
