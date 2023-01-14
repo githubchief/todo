@@ -76,14 +76,16 @@ const Dom = () => {
 
             project.setProjectTasks(tempTask);
             displayTasks(project);
+            taskForm.reset();
         }
 
         // Remove any existing event listeners for the task form
         taskForm.removeEventListener('submit', taskFormCallback);
         // Add new event listener for task form submission
         taskForm.addEventListener('submit', taskFormCallback);
-         
+        
     }
+
     return { display };
 }
 
