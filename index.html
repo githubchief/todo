@@ -21,18 +21,18 @@
       <form id="create-task-form">
         <h3>Create a new task</h3>
         <label for="task-title">Task Title:</label>
-        <input type="text" id="task-title" name="task-title" required>
+        <input type="text" id="task-title" name="task-title" autocomplete="off" required >
         <br>
         <label for="task-description">Task Description:</label>
-        <textarea id="task-description" name="task-description"></textarea>
+        <textarea id="task-description" name="task-description" autocomplete="off"></textarea>
         <br>
         <label for="due-date">Due Date:</label>
-        <input type="date" id="due-date" name="due-date">
+        <input type="date" id="due-date" name="due-date" autocomplete="off">
         <br>
         <label for="important">Important:</label>
-        <input type="radio" id="important" name="important" value="true">
+        <input type="radio" id="important" name="important" value="true" autocomplete="off">
         <br>
-        <button type="submit">Create Task</button>
+        <button type="submit" >Create Task</button>
       </form>
       
     </div>
