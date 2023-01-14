@@ -31,14 +31,17 @@ const Dom = () => {
 
             projectEl.addEventListener('click', (e) => {
                 displayTasks(project);
-                taskFormEventListener(project);
+                if (!taskFormEventAdded) {
+                    taskFormEventListener(project);
+                    taskFormEventAdded = true;
+                }
             });
             projectContainer.appendChild(projectEl);
         });
     };
 
     const displayTasks = (project) => {
-        
+        debugger;
         while (taskContainer.firstChild) {
             taskContainer.removeChild(taskContainer.firstChild);
         }
@@ -63,18 +66,22 @@ const Dom = () => {
 
     const taskFormEventListener = (project) => {
 
-        // Add new event listener for task form submission
-        taskForm.addEventListener('submit', (e) => {
+        const taskFormCallback = (e) => {
             e.preventDefault();
             const title = document.getElementById("task-title").value;
             const description = document.getElementById("task-description").value;
             const dueDate = document.getElementById("due-date").value;
             const important = document.getElementById("important").value;
             const tempTask = task({ title, description, dueDate, important });
-    
+
             project.setProjectTasks(tempTask);
             displayTasks(project);
-        });
+        }
+
+        // Remove any existing event listeners for the task form
+        taskForm.removeEventListener('submit', taskFormCallback);
+        // Add new event listener for task form submission
+        taskForm.addEventListener('submit', taskFormCallback);
          
     }
     return { display };
