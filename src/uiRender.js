@@ -11,7 +11,6 @@ const Dom = () => {
     let lop = listOfProjects();
     let taskFormEventAdded = false;
     lop.setProject("Project 1");
-    lop.setProject("Project 2");
 
     let iTask = {
         title:"odin1",
@@ -24,7 +23,7 @@ const Dom = () => {
     };
 
     lop.getProjectByName("Project 1").setProjectTasks(task(iTask));
-    lop.getProjectByName("Project 2").setProjectTasks(task(jTask));
+    lop.getProjectByName("Project 1").setProjectTasks(task(jTask));
 
     const display = () => {
 
@@ -47,7 +46,7 @@ const Dom = () => {
             projectEl.addEventListener('click', (e) => {
 
                 let temp = document.querySelector('#data-selected-project');
-
+                
                 if(temp){
                     temp.removeAttribute("id");
                 }
