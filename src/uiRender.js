@@ -10,6 +10,21 @@ const Dom = () => {
     const taskContainer = document.querySelector('#task-container');
     let lop = listOfProjects();
     let taskFormEventAdded = false;
+    lop.setProject("Project 1");
+    lop.setProject("Project 2");
+
+    let iTask = {
+        title:"odin1",
+        description:"to do list"
+    };
+
+    let jTask = {
+        title:"odin2",
+        description:"to do list"
+    };
+
+    lop.getProjectByName("Project 1").setProjectTasks(task(iTask));
+    lop.getProjectByName("Project 2").setProjectTasks(task(jTask));
 
     const display = () => {
 
@@ -20,28 +35,36 @@ const Dom = () => {
 
     const displayProjects = () => {
         let prjtList = lop.getProjects();
-        while (projectContainer.firstChild) {
+        while (projectContainer.firstChild) 
+        {
             projectContainer.removeChild(projectContainer.firstChild);
         }
 
         prjtList.forEach(project => {
             const projectEl = document.createElement('div');
-            projectEl.id = "project-list";
+            projectEl.className = "project-list";
             projectEl.innerText = project.getProjectTitle();
-
             projectEl.addEventListener('click', (e) => {
+
+                let temp = document.querySelector('#data-selected-project');
+
+                if(temp){
+                    temp.removeAttribute("id");
+                }
+
+                projectEl.setAttribute("id", "data-selected-project" );
                 displayTasks(project);
                 if (!taskFormEventAdded) {
-                    taskFormEventListener(project);
                     taskFormEventAdded = true;
+                    taskFormEventListener(projectEl);
                 }
             });
             projectContainer.appendChild(projectEl);
+            
         });
     };
 
     const displayTasks = (project) => {
-        debugger;
         while (taskContainer.firstChild) {
             taskContainer.removeChild(taskContainer.firstChild);
         }
@@ -64,7 +87,7 @@ const Dom = () => {
         });
     };
 
-    const taskFormEventListener = (project) => {
+    const taskFormEventListener = (projectEl) => {
 
         const taskFormCallback = (e) => {
             e.preventDefault();
@@ -74,16 +97,19 @@ const Dom = () => {
             const important = document.getElementById("important").value;
             const tempTask = task({ title, description, dueDate, important });
 
-            project.setProjectTasks(tempTask);
-            displayTasks(project);
-            taskForm.reset();
+            let selectedProject = lop.getProjectByName(document.querySelector('#data-selected-project').innerText);
+            if( selectedProject) {
+                selectedProject.setProjectTasks(tempTask);
+                displayTasks(selectedProject);
+                taskForm.reset();
+            }
         }
 
         // Remove any existing event listeners for the task form
         taskForm.removeEventListener('submit', taskFormCallback);
         // Add new event listener for task form submission
         taskForm.addEventListener('submit', taskFormCallback);
-        
+        taskFormEventAdded = false;
     }
 
     return { display };
