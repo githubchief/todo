@@ -4,6 +4,7 @@ const task = (item) => {
     let taskDescription = item.description;
     let dueDate = item.dueDate|| "no due date";
     let important = item.important || false;
+    let status = item.compelete|| false;
 
     const getTaskTitle = () => {
         return taskTitle;
@@ -19,6 +20,10 @@ const task = (item) => {
 
     const getImportance = () => {
         return important;
+    }
+
+    const getstatus = () => {
+        return status;
     }
 
     const setTaskTitle = (temp) => {
@@ -37,14 +42,20 @@ const task = (item) => {
         important = temp;
     }
 
+    const setstatus = (temp) => {
+         status = temp;
+    }
+
     return {getTaskTitle, 
             getTaskDescription, 
             getDueDate,
             getImportance,
+            getstatus,
             setTaskDescription, 
             setTaskTitle,
             setDueDate,
-            setImportance
+            setImportance,
+            setstatus
             };
 };
 
