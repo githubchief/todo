@@ -1,20 +1,36 @@
 body {
     background-color: rgb(253, 253, 253);
     color: rgb(0, 0, 0);
+    text-align: center;
 }
 
-#tempForms {
+.header {
+    border-bottom: 0.125rem solid;
+}
+
+.container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
+    grid-template-columns: 0.25fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
 }
 
-#todoList {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
+.left-panel {
+    background-color: rgb(252, 239, 221);
+    height: 100vh;
 }
 
+/* .left-panel > div:only-child {
+    background-color: brown;
+} */
+.right-panel {
+    background-color: antiquewhite;
+    height: 100vh;
+}
+
+.project-title-header {
+    font-size: 2rem;
+}
 #project-list {
     background-color: rgb(101, 205, 205);
 }
