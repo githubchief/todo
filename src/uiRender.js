@@ -41,9 +41,12 @@ const Dom = () => {
         }
 
         prjtList.forEach(project => {
+
             const projectEl = document.createElement('div');
             projectEl.className = "project-list";
             projectEl.innerText = project.getProjectTitle();
+
+            //event listener to display project tasks
             projectEl.addEventListener('click', (e) => {
                 let temp = document.querySelector('#data-selected-project');
                 if(temp){
@@ -56,26 +59,45 @@ const Dom = () => {
                     taskFormEventListener(projectEl);
                 }
             });
+
+            //event listener to edit and delete the project
+            projectIcon.addEventListener('click', (e)=> {
+                projectEditFormEventListener();
+            });
             projectContainer.appendChild(projectEl);
             
         });
     };
 
     const displayTasks = (project) => {
+
         while (taskContainer.firstChild) {
             taskContainer.removeChild(taskContainer.firstChild);
         }
-
+        
+        //project header displayed above the list of tasks
         projectTitleHeader.innerText = project.getProjectTitle();
+
         project.getProjectTasks().forEach(task => {
+
+            //display complete details of the task
             const taskEl = document.createElement('div');
             taskEl.innerText = task.getTaskTitle();
             taskContainer.appendChild(taskEl);
-        })
+
+            //add event listener to task 3 dot icon element, when clicked call task edit form
+            taskEl.addEventListener('click', (e)=> {
+                taskEditFormEventListener();
+            });
+        });
+
+        //after all tasks, show add task button
+        taskFormEventListener();
+
     };
 
+    //add event listener to project-addition form and handle the same
     const projectFormEventListener = () => {
-        // Add event listener for project form submission 
         projectForm.addEventListener('submit', (e) => {
             e.preventDefault();
             //when project title is submitted, call setproject to create a project and push it to the listofprojects.
@@ -86,7 +108,17 @@ const Dom = () => {
         });
     };
 
-    const taskFormEventListener = (projectEl) => {
+    //add event listener to edit project form and handle the same
+    const projectEditFormEventListener = () => {
+        //display edit and delete buttons
+        //when edit clicked, call edit function (setProjectTitle) 
+            //when edit is clicked, form has to be prepopulated with already existing data.
+        //when delete clicked, call delete function (deleteProject)
+
+    }
+
+    //add event listener to task-addition form and handle the same
+    const taskFormEventListener = () => {
 
         const taskFormCallback = (e) => {
             e.preventDefault();
@@ -109,6 +141,11 @@ const Dom = () => {
         // Add new event listener for task form submission
         taskForm.addEventListener('submit', taskFormCallback);
         taskFormEventAdded = false;
+    }
+
+    //add event listener to edit task form and handle the same
+    const taskEditFormEventListener = () => {
+        //display task form and populate with already existing data
     }
 
     return { display };
