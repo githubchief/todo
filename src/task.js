@@ -1,16 +1,15 @@
-import format from "date-fns/format";
 const task = (item) => {
     
     let taskTitle = item.title;
     let taskDescription = item.description;
-    let dueDate = format(new Date(), 'MM/dd/yyyy');
-    let important = false;
+    let dueDate = item.dueDate|| "no due date";
+    let important = item.important || false;
 
     const getTaskTitle = () => {
         return taskTitle;
     }
 
-    const getTaskDesription = () => {
+    const getTaskDescription = () => {
         return taskDescription;
     }
 
@@ -39,7 +38,7 @@ const task = (item) => {
     }
 
     return {getTaskTitle, 
-            getTaskDesription, 
+            getTaskDescription, 
             getDueDate,
             getImportance,
             setTaskDescription, 
