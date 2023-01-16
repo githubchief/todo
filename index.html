@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>To Do</title>
-    <script defer src="main.js"></script>
+    <script defer src="main.js"></script>    
 </head>
 <body>
   <div class="header">
@@ -22,15 +23,16 @@
       <div class="project-container">
         <div>PROJECTS</div>
         <div id = "project-list-container"></div>
+        <button>Add Project</button>
         <form id="create-project-form">
           <h3>Create a new project</h3>
           <label for="project-title">Project Title:</label>
           <input type="text" id="project-title" name="project-title" required>
           <br>
-          <button type="submit">Create Project</button>
+          <button type="submit">Add</button>
+          <button type="reset">Cancel</button>
         </form>
       </div>
-      
     </div>
     <div class="right-panel">
       <div class="project-title-header"></div>
@@ -47,9 +49,10 @@
         <input type="date" id="due-date" name="due-date" autocomplete="off">
         <br>
         <label for="important">Important:</label>
-        <input type="radio" id="important" name="important" value="true" autocomplete="off">
+        <input type="checkbox" id="important" name="important" value="true" autocomplete="off">
         <br>
-        <button type="submit" >Create Task</button>
+        <button type="submit" >Add</button>
+        <button type="reset">Cancel</button>
       </form>
     </div>
   </div>
