@@ -23,9 +23,17 @@
       <div class="project-container">
         <div>PROJECTS</div>
         <div id = "project-list-container"></div>
-        <button>Add Project</button>
+        <button id = "add-project">Add Project</button>
         <form id="create-project-form">
           <h3>Create a new project</h3>
+          <label for="project-title">Project Title:</label>
+          <input type="text" id="project-title" name="project-title" required>
+          <br>
+          <button type="submit">Add</button>
+          <button type="reset">Cancel</button>
+        </form>
+        <form id="edit-project-form">
+          <h3> Edit Project</h3>
           <label for="project-title">Project Title:</label>
           <input type="text" id="project-title" name="project-title" required>
           <br>
