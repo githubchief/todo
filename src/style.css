@@ -20,9 +20,17 @@ body {
     height: 100vh;
 }
 
-/* .left-panel > div:only-child {
-    background-color: brown;
-} */
+.project-list {
+    display: grid;
+    grid-template-columns: auto 1fr auto ;
+    column-gap: 1rem;
+    justify-items: start;
+}
+
+.project-list i, .project-list span{
+    padding: 1rem;
+}
+
 .right-panel {
     background-color: antiquewhite;
     height: 100vh;
@@ -31,6 +39,15 @@ body {
 .project-title-header {
     font-size: 2rem;
 }
+
+#create-project-form, #edit-project-form{
+    display: none;
+}
+
+#create-project-form.visible, #edit-project-form.visible {
+    display: block;
+}
+
 #project-list {
     background-color: rgb(101, 205, 205);
 }

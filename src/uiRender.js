@@ -5,9 +5,14 @@ import { project } from "./project";
 const Dom = () => {
 
     const projectForm = document.querySelector('#create-project-form');
+    const editProjectForm = document.querySelector('#edit-project-form');
     const taskForm = document.querySelector('#create-task-form');
     const projectContainer = document.querySelector('#project-list-container');
     const taskContainer = document.querySelector('#task-container');
+    const addProject = document.querySelector('#add-project');
+    const renameProject = document.querySelector('#rename-project');
+    const deleteProject = document.querySelector('#delete-project');
+    
     let projectTitleHeader = document.querySelector('.project-title-header');
     let lop = listOfProjects();
     let taskFormEventAdded = false;
@@ -29,6 +34,10 @@ const Dom = () => {
     const display = () => {
 
         displayProjects();
+
+        addProject.addEventListener("click", () => {
+            projectForm.classList.toggle("visible");
+            });
         projectFormEventListener();
 
     }
@@ -44,7 +53,16 @@ const Dom = () => {
 
             const projectEl = document.createElement('div');
             projectEl.className = "project-list";
-            projectEl.innerText = project.getProjectTitle();
+            let iconEl = document.createElement('i');
+            iconEl.className = "fa-solid fa-list";
+            let titleEl = document.createElement('span');
+            titleEl.innerText = project.getProjectTitle();
+            let editEl = document.createElement('i');
+            editEl = document.createElement('i');
+            editEl.className = "fa-solid fa-ellipsis-vertical project-edit";
+            projectEl.appendChild(iconEl);
+            projectEl.appendChild(titleEl);
+            projectEl.appendChild(editEl);
 
             //event listener to display project tasks
             projectEl.addEventListener('click', (e) => {
@@ -59,11 +77,8 @@ const Dom = () => {
                     taskFormEventListener(projectEl);
                 }
             });
-
             //event listener to edit and delete the project
-            projectIcon.addEventListener('click', (e)=> {
-                projectEditFormEventListener();
-            });
+            editEl.addEventListener('click', projectEditFormEventListener(editEl));
             projectContainer.appendChild(projectEl);
             
         });
@@ -109,11 +124,33 @@ const Dom = () => {
     };
 
     //add event listener to edit project form and handle the same
-    const projectEditFormEventListener = () => {
+    const projectEditFormEventListener = (editEl) => {
+        
         //display edit and delete buttons
-        //when edit clicked, call edit function (setProjectTitle) 
-            //when edit is clicked, form has to be prepopulated with already existing data.
-        //when delete clicked, call delete function (deleteProject)
+        editEl.addEventListener("click", () => {
+            editProjectForm.classList.toggle("visible");
+            });
+        
+        //when edit clicked, call setProjectTitle function
+        renameProject.addEventListener("click", ()=>{
+            
+            let selectedProjectTitle = document.querySelector('#data-selected-project').innerText;
+            let selectedProject = lop.getProjectByName(selectedProjectTitle);
+
+            let newProjectTitle = document.getElementById("edit-project-title");
+            newProjectTitle.setAttribute("name","selectedProjectTitle");
+
+            selectedProject.setProjectTitle(newProjectTitle.value);
+            displayProjects();
+        });
+        deleteProject.addEventListener("click", ()=>{
+            let selectedProjectTitle = document.querySelector('#data-selected-project').innerText;
+            let selectedProject = lop.getProjectByName(selectedProjectTitle);
+            console.log(selectedProject);
+            lop.deleteProject(selectedProject);
+        })
+        //when edit is clicked, form has to be prepopulated with already existing data.
+        //when delete )clicked, call delete function (deleteProject)
 
     }
 
@@ -127,8 +164,8 @@ const Dom = () => {
             const dueDate = document.getElementById("due-date").value;
             const important = document.getElementById("important").value;
             const tempTask = task({ title, description, dueDate, important });
-
-            let selectedProject = lop.getProjectByName(document.querySelector('#data-selected-project').innerText);
+            let selectedProjectTitle = document.querySelector('#data-selected-project').innerText;
+            let selectedProject = lop.getProjectByName(selectedProjectTitle);
             if( selectedProject) {
                 selectedProject.setProjectTasks(tempTask);
                 displayTasks(selectedProject);
