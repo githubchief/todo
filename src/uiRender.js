@@ -6,11 +6,12 @@ const Dom = () => {
 
     const projectForm = document.querySelector('#create-project-form');
     const taskForm = document.querySelector('#create-task-form');
-    const projectContainer = document.querySelector('#project-container');
+    const projectContainer = document.querySelector('#project-list-container');
     const taskContainer = document.querySelector('#task-container');
+    let projectTitleHeader = document.querySelector('.project-title-header');
     let lop = listOfProjects();
     let taskFormEventAdded = false;
-    lop.setProject("Project 1");
+    lop.setProject("Project");
 
     let iTask = {
         title:"odin1",
@@ -22,8 +23,8 @@ const Dom = () => {
         description:"to do list"
     };
 
-    lop.getProjectByName("Project 1").setProjectTasks(task(iTask));
-    lop.getProjectByName("Project 1").setProjectTasks(task(jTask));
+    lop.getProjectByName("Project").setProjectTasks(task(iTask));
+    lop.getProjectByName("Project").setProjectTasks(task(jTask));
 
     const display = () => {
 
@@ -44,13 +45,10 @@ const Dom = () => {
             projectEl.className = "project-list";
             projectEl.innerText = project.getProjectTitle();
             projectEl.addEventListener('click', (e) => {
-
                 let temp = document.querySelector('#data-selected-project');
-                
                 if(temp){
                     temp.removeAttribute("id");
                 }
-
                 projectEl.setAttribute("id", "data-selected-project" );
                 displayTasks(project);
                 if (!taskFormEventAdded) {
@@ -67,6 +65,8 @@ const Dom = () => {
         while (taskContainer.firstChild) {
             taskContainer.removeChild(taskContainer.firstChild);
         }
+
+        projectTitleHeader.innerText = project.getProjectTitle();
         project.getProjectTasks().forEach(task => {
             const taskEl = document.createElement('div');
             taskEl.innerText = task.getTaskTitle();
