@@ -15,7 +15,9 @@ const Dom = () => {
   let projectTitleHeader = document.querySelector(".project-title-header");
   let lop = listOfProjects();
   let taskFormEventAdded = false;
-  lop.setProject("Project");
+  lop.setProject("Project 1");
+  lop.setProject("Project 2");
+  lop.setProject("Project 3");
 
   let iTask = {
     title: "odin1",
@@ -27,8 +29,8 @@ const Dom = () => {
     description: "to do list",
   };
 
-  lop.getProjectByName("Project").setProjectTasks(task(iTask));
-  lop.getProjectByName("Project").setProjectTasks(task(jTask));
+  lop.getProjectByName("Project 1").setProjectTasks(task(iTask));
+  lop.getProjectByName("Project 1").setProjectTasks(task(jTask));
 
   const display = () => {
     displayProjects();
@@ -65,12 +67,12 @@ const Dom = () => {
         if (temp) {
           temp.removeAttribute("id");
         }
-        projectEl.setAttribute("id", "data-selected-project");
+        titleEl.setAttribute("id", "data-selected-project");
         displayTasks(project);
-        if (!taskFormEventAdded) {
-          taskFormEventAdded = true;
-          taskFormEventListener(projectEl);
-        }
+        // if (!taskFormEventAdded) {
+        //   taskFormEventAdded = true;
+        //   taskFormEventListener(projectEl);
+        // }
       });
       //event listener to edit and delete the project
       editEl.addEventListener("click", projectEditFormEventListener(editEl));
@@ -99,6 +101,7 @@ const Dom = () => {
     });
 
     //after all tasks, show add task button
+    //call event listener to include task form
     taskFormEventListener();
   };
 
@@ -116,39 +119,49 @@ const Dom = () => {
 
   //add event listener to edit project form and handle the same
   const projectEditFormEventListener = (editEl) => {
+
+    const editProjectFormToggle = () => {
+        editProjectForm.classList.toggle("visible");
+      }
+
     //display edit and delete buttons
-    editEl.addEventListener("click", () => {
-      editProjectForm.classList.toggle("visible");
-    });
+    editEl.addEventListener("click", editProjectFormToggle);
 
+    const renameProjectFormCallBack = (e) => {
+         e.preventDefault();
+         console.log("hello");
+         let selectedProjectTitle = document.querySelector(
+            "#data-selected-project"
+        ).innerText;
+         if(selectedProjectTitle) {
+            debugger;
+            let selectedProject = lop.getProjectByName(selectedProjectTitle);
+
+            let newProjectTitle = document.getElementById("edit-project-title");
+
+            //when edit is clicked, form has to be prepopulated with already existing data.
+            newProjectTitle.setAttribute("name", "selectedProjectTitle");
+
+            selectedProject.setProjectTitle(newProjectTitle.value);
+            displayProjects();
+         }
+            
+    };
+
+    renameProject.removeEventListener("click", renameProjectFormCallBack);
     //when edit clicked, call setProjectTitle function
-    renameProject.addEventListener("click", (e) => {
-        e.preventDefault();
-        debugger;
-      let selectedProjectTitle = document.querySelector(
-        "#data-selected-project"
-      ).innerText;
-      let selectedProject = lop.getProjectByName(selectedProjectTitle);
-
-      let newProjectTitle = document.getElementById("edit-project-title");
-
-      //when edit is clicked, form has to be prepopulated with already existing data.
-      newProjectTitle.setAttribute("name", "selectedProjectTitle");
-
-      selectedProject.setProjectTitle(newProjectTitle.value);
-      displayProjects();
-    });
+    renameProject.addEventListener("click", renameProjectFormCallBack);
 
     //when delete is clicked, call delete function (deleteProject)
     deleteProject.addEventListener("click", (e) => {
         e.preventDefault();
-      let selectedProjectTitle = document.querySelector(
-        "#data-selected-project"
-      ).innerText;
-      let selectedProject = lop.getProjectByName(selectedProjectTitle);
-      console.log(selectedProject);
-      lop.deleteProject(selectedProject);
-      displayProjects();
+        let selectedProjectTitle = document.querySelector(
+            "#data-selected-project"
+        ).innerText;
+        let selectedProject = lop.getProjectByName(selectedProjectTitle);
+        console.log(selectedProject);
+        lop.deleteProject(selectedProject);
+        displayProjects();
     });
     
     
@@ -156,6 +169,7 @@ const Dom = () => {
 
   //add event listener to task-addition form and handle the same
   const taskFormEventListener = () => {
+    
     const taskFormCallback = (e) => {
       e.preventDefault();
       const title = document.getElementById("task-title").value;
@@ -167,18 +181,16 @@ const Dom = () => {
         "#data-selected-project"
       ).innerText;
       let selectedProject = lop.getProjectByName(selectedProjectTitle);
-      if (selectedProject) {
         selectedProject.setProjectTasks(tempTask);
         displayTasks(selectedProject);
         taskForm.reset();
-      }
     };
 
     // Remove any existing event listeners for the task form
     taskForm.removeEventListener("submit", taskFormCallback);
     // Add new event listener for task form submission
     taskForm.addEventListener("submit", taskFormCallback);
-    taskFormEventAdded = false;
+    
   };
 
   //add event listener to edit task form and handle the same
