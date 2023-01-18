@@ -48,11 +48,11 @@ body {
     display: block;
 }
 
-#create-task-form, #edit-project-form{
+#create-task-form, #edit-task-form{
     display: none;
 }
 
-#create-task-form.visible, #edit-project-form.visible {
+#create-task-form.visible, #edit-task-form.visible {
     display: block;
 }
 
