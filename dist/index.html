@@ -38,13 +38,15 @@
           <input type="text" id="edit-project-title" name="edit-project-title" required>
           <br>
           <button type="submit" id="rename-project">Rename</button>
-          <button type="reset" id="delete-project">Delete</button>
+          <button type="reset">Cancel</button>
+          <button type="reset" id ="delete-project">Delete</button>
         </form>
       </div>
     </div>
     <div class="right-panel">
       <div class="project-title-header"></div>
-      <div id="task-container"></div>
+      <div id="task-list-container"></div>
+      <button id = "add-task">Add Task</button>
       <form id="create-task-form">
         <h3>Create a new task</h3>
         <label for="task-title">Task Title:</label>
@@ -61,6 +63,24 @@
         <br>
         <button type="submit" >Add</button>
         <button type="reset">Cancel</button>
+      </form>
+      <form id="edit-task-form">
+        <h3> Edit task</h3>
+        <label for="task-title">Task Title:</label>
+        <input type="text" id="edit-task-title" name="task-title" autocomplete="off" required >
+        <br>
+        <label for="task-description">Task Description:</label>
+        <textarea id="edit-task-description" name="task-description" autocomplete="off"></textarea>
+        <br>
+        <label for="due-date">Due Date:</label>
+        <input type="date" id="edit-due-date" name="due-date" autocomplete="off">
+        <br>
+        <label for="important">Important:</label>
+        <input type="checkbox" id="edit-important" name="important" value="true" autocomplete="off">
+        <br>
+        <button type="submit" id="edit-task">Edit</button>
+        <button type="reset">Cancel</button>
+        <button type="reset" id ="delete-task">Delete</button>
       </form>
     </div>
   </div>
