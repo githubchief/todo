@@ -6,12 +6,15 @@ const Dom = () => {
   const projectForm = document.querySelector("#create-project-form");
   const editProjectForm = document.querySelector("#edit-project-form");
   const taskForm = document.querySelector("#create-task-form");
+  const editTaskForm = document.querySelector("#edit-task-form");
   const projectContainer = document.querySelector("#project-list-container");
   const taskContainer = document.querySelector("#task-list-container");
   const addProject = document.querySelector("#add-project");
   const addTask = document.querySelector("#add-task");
   const renameProject = document.querySelector("#rename-project");
   const deleteProject = document.querySelector("#delete-project");
+  const editTask = document.querySelector("#edit-task");
+  const deleteTask = document.querySelector("#delete-task");
 
   let projectTitleHeader = document.querySelector(".project-title-header");
   let lop = listOfProjects();
@@ -59,7 +62,6 @@ const Dom = () => {
       let titleEl = document.createElement("span");
       titleEl.innerText = project.getProjectTitle();
       let editEl = document.createElement("i");
-      editEl = document.createElement("i");
       editEl.className = "fa-solid fa-ellipsis-vertical project-edit";
       projectEl.appendChild(iconEl);
       projectEl.appendChild(titleEl);
@@ -111,22 +113,24 @@ const Dom = () => {
       
       let importanceEl = document.createElement("p");
       importanceEl.innerText = task.getImportance();
-      
-    //   let statusEl = document.createElement("p");
-    //   statusEl.innerText = task.getStatus();
-      
+
+      let editEl = document.createElement("i");
+      editEl.className = "fa-solid fa-ellipsis-vertical task-edit";
+        //   let statusEl = document.createElement("p");
+        //   statusEl.innerText = task.getStatus();
       taskEl.appendChild(titleEl);
       taskEl.appendChild(descriptionEl);
       taskEl.appendChild(dueDateEl);
       taskEl.appendChild(importanceEl);
-      //taskEl.appendChild(statusEl);
-      
+      taskEl.appendChild(editEl);
+      //add event listener to task 3 dot icon element, when clicked call task edit form
+      editEl.addEventListener("click", taskEditFormEventListener(editEl, titleEl));
       taskContainer.appendChild(taskEl);
 
-      //add event listener to task 3 dot icon element, when clicked call task edit form
-      taskEl.addEventListener("click", (e) => {
-        taskEditFormEventListener();
-      });
+      
+    //   editEl.addEventListener("click", (e) => {
+    //     taskEditFormEventListener(editEl);
+    //   });
     });
 
     //after all tasks, show add task button
@@ -164,14 +168,14 @@ const Dom = () => {
 
   const deleteProjectFormCallBack = (e) => {
     e.preventDefault();
-        let selectedProjectTitle = document.querySelector(
-            "#data-selected-project"
-        ).innerText;
-        let selectedProject = lop.getProjectByName(selectedProjectTitle);
-        lop.deleteProject(selectedProject);
-        displayProjects();
-        editProjectForm.classList.toggle("visible");   
-       //once project is deleted, take user to home page.
+    let selectedProjectTitle = document.querySelector(
+        "#data-selected-project"
+    ).innerText;
+    let selectedProject = lop.getProjectByName(selectedProjectTitle);
+    lop.deleteProject(selectedProject);
+    displayProjects();
+    editProjectForm.classList.toggle("visible");   
+    //once project is deleted, take user to home page.
   };
 
   //add event listener to edit project form and handle the same
@@ -216,11 +220,70 @@ const Dom = () => {
     
   };
 
+  const editTaskFormCallBack = (e) => {
+    
+    e.preventDefault();
+    
+    const title = document.getElementById("edit-task-title").value;
+    const description = document.getElementById("edit-task-description").value;
+    const dueDate = document.getElementById("edit-due-date").value;
+    const important = document.getElementById("edit-important").value;
+    let selectedProjectTitle = document.querySelector(
+        "#data-selected-project"
+      ).innerText;
+    let selectedTaskTitle = document.querySelector(
+        "#data-selected-task"
+      ).innerText;
+    let selectedTask = lop.getProjectByName(selectedProjectTitle).getTaskByName(selectedTaskTitle);
+    
+    selectedTask.setTaskDescription(description);
+    selectedTask.setTaskTitle(title);
+    selectedTask.setDueDate(dueDate);
+    selectedTask.setImportance(important);
+
+    displayTasks(lop.getProjectByName(selectedProjectTitle));
+    editTaskForm.reset();
+    editTaskForm.classList.toggle("visible");
+  }
+
+  const deleteTaskFormCallBack = (e) => {
+    e.preventDefault();
+    let selectedProjectTitle = document.querySelector(
+        "#data-selected-project"
+      ).innerText;
+    let selectedTaskTitle = document.querySelector(
+        "#data-selected-task"
+      ).innerText;
+    let selectedTask = lop.getProjectByName(selectedProjectTitle).getTaskByName(selectedTaskTitle);
+
+    lop.getProjectByName(selectedProjectTitle).deleteTask(selectedTask);
+    displayTasks(lop.getProjectByName(selectedProjectTitle));
+    editTaskForm.classList.toggle("visible");
+  }
+
   //add event listener to edit task form and handle the same
-  const taskEditFormEventListener = () => {
+  const taskEditFormEventListener = (editEl, titleEl) => {
+
+    //display edit and delete buttons
+    editEl.addEventListener("click", ()=> {
+        editTaskForm.classList.toggle("visible");
+        let temp = document.querySelector("#data-selected-task");
+        if (temp) {
+          temp.removeAttribute("id");
+        } 
+    titleEl.setAttribute("id", "data-selected-task");
+    });
+    
+    //when edit clicked, call setProjectTitle function
+    editTask.removeEventListener("click", editTaskFormCallBack);
+    //when edit clicked, call setProjectTitle function
+    editTask.addEventListener("click", editTaskFormCallBack);
+
+    //when delete is clicked, call delete function (deleteProject)
+    deleteTask.addEventListener("click", deleteTaskFormCallBack);
+
     //display task form and populate with already existing data
   };
-
   return { display };
 };
 
