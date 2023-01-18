@@ -7,14 +7,14 @@ const Dom = () => {
   const editProjectForm = document.querySelector("#edit-project-form");
   const taskForm = document.querySelector("#create-task-form");
   const projectContainer = document.querySelector("#project-list-container");
-  const taskContainer = document.querySelector("#task-container");
+  const taskContainer = document.querySelector("#task-list-container");
   const addProject = document.querySelector("#add-project");
+  const addTask = document.querySelector("#add-task");
   const renameProject = document.querySelector("#rename-project");
   const deleteProject = document.querySelector("#delete-project");
 
   let projectTitleHeader = document.querySelector(".project-title-header");
   let lop = listOfProjects();
-  let taskFormEventAdded = false;
   lop.setProject("Project 1");
   lop.setProject("Project 2");
   lop.setProject("Project 3");
@@ -38,6 +38,10 @@ const Dom = () => {
     addProject.addEventListener("click", () => {
       projectForm.classList.toggle("visible");
     });
+
+    addTask.addEventListener("click", () => {
+        taskForm.classList.toggle("visible");
+      });
     projectFormEventListener();
   };
 
@@ -81,16 +85,19 @@ const Dom = () => {
   };
 
   const displayTasks = (project) => {
+
     while (taskContainer.firstChild) {
       taskContainer.removeChild(taskContainer.firstChild);
     }
-
+    
     //project header displayed above the list of tasks
     projectTitleHeader.innerText = project.getProjectTitle();
 
     project.getProjectTasks().forEach((task) => {
+        
       //display complete details of the task
       const taskEl = document.createElement("div");
+      taskEl.id = "task-list";
       taskEl.innerText = task.getTaskTitle();
       taskContainer.appendChild(taskEl);
 
@@ -117,44 +124,22 @@ const Dom = () => {
     });
   };
 
-  //add event listener to edit project form and handle the same
-  const projectEditFormEventListener = (editEl) => {
-
-    const editProjectFormToggle = () => {
-        editProjectForm.classList.toggle("visible");
-      }
-
-    //display edit and delete buttons
-    editEl.addEventListener("click", editProjectFormToggle);
-
-    const renameProjectFormCallBack = (e) => {
-         e.preventDefault();
-         console.log("hello");
-         let selectedProjectTitle = document.querySelector(
-            "#data-selected-project"
+  const renameProjectFormCallBack = (e) => {
+    e.preventDefault();
+    let selectedProjectTitle = document.querySelector(
+       "#data-selected-project"
         ).innerText;
-         if(selectedProjectTitle) {
-            debugger;
-            let selectedProject = lop.getProjectByName(selectedProjectTitle);
+    let selectedProject = lop.getProjectByName(selectedProjectTitle);
+    let newProjectTitle = document.getElementById("edit-project-title");
 
-            let newProjectTitle = document.getElementById("edit-project-title");
+    //when edit is clicked, form has to be prepopulated with already existing data.
+    newProjectTitle.setAttribute("name", "selectedProjectTitle");
+    selectedProject.setProjectTitle(newProjectTitle.value);
+    displayProjects();   
+  };
 
-            //when edit is clicked, form has to be prepopulated with already existing data.
-            newProjectTitle.setAttribute("name", "selectedProjectTitle");
-
-            selectedProject.setProjectTitle(newProjectTitle.value);
-            displayProjects();
-         }
-            
-    };
-
-    renameProject.removeEventListener("click", renameProjectFormCallBack);
-    //when edit clicked, call setProjectTitle function
-    renameProject.addEventListener("click", renameProjectFormCallBack);
-
-    //when delete is clicked, call delete function (deleteProject)
-    deleteProject.addEventListener("click", (e) => {
-        e.preventDefault();
+  const deleteProjectFormCallBack = (e) => {
+    e.preventDefault();
         let selectedProjectTitle = document.querySelector(
             "#data-selected-project"
         ).innerText;
@@ -162,29 +147,42 @@ const Dom = () => {
         console.log(selectedProject);
         lop.deleteProject(selectedProject);
         displayProjects();
+  };
+
+  //add event listener to edit project form and handle the same
+  const projectEditFormEventListener = (editEl) => {
+
+    //display edit and delete buttons
+    editEl.addEventListener("click", ()=> {
+        editProjectForm.classList.toggle("visible");
     });
-    
-    
+
+    //when edit clicked, call setProjectTitle function
+    renameProject.addEventListener("click", renameProjectFormCallBack);
+
+    //when delete is clicked, call delete function (deleteProject)
+    deleteProject.addEventListener("click", deleteProjectFormCallBack);
+
+  };
+
+  const taskFormCallback = (e) => {
+    e.preventDefault();
+    const title = document.getElementById("task-title").value;
+    const description = document.getElementById("task-description").value;
+    const dueDate = document.getElementById("due-date").value;
+    const important = document.getElementById("important").value;
+    const tempTask = task({ title, description, dueDate, important });
+    let selectedProjectTitle = document.querySelector(
+      "#data-selected-project"
+    ).innerText;
+    let selectedProject = lop.getProjectByName(selectedProjectTitle);
+      selectedProject.setProjectTasks(tempTask);
+      displayTasks(selectedProject);
+      taskForm.reset();
   };
 
   //add event listener to task-addition form and handle the same
   const taskFormEventListener = () => {
-    
-    const taskFormCallback = (e) => {
-      e.preventDefault();
-      const title = document.getElementById("task-title").value;
-      const description = document.getElementById("task-description").value;
-      const dueDate = document.getElementById("due-date").value;
-      const important = document.getElementById("important").value;
-      const tempTask = task({ title, description, dueDate, important });
-      let selectedProjectTitle = document.querySelector(
-        "#data-selected-project"
-      ).innerText;
-      let selectedProject = lop.getProjectByName(selectedProjectTitle);
-        selectedProject.setProjectTasks(tempTask);
-        displayTasks(selectedProject);
-        taskForm.reset();
-    };
 
     // Remove any existing event listeners for the task form
     taskForm.removeEventListener("submit", taskFormCallback);
