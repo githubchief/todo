@@ -56,6 +56,12 @@ body {
     display: block;
 }
 
-#project-list {
-    background-color: rgb(101, 205, 205);
+.task-list {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.fa-solid.fa-ellipsis-vertical {
+    padding: 1rem;
 }

@@ -116,8 +116,9 @@ const Dom = () => {
 
       let editEl = document.createElement("i");
       editEl.className = "fa-solid fa-ellipsis-vertical task-edit";
-        //   let statusEl = document.createElement("p");
-        //   statusEl.innerText = task.getStatus();
+      let statusEl = document.createElement("p");
+      statusEl.innerText = task.getStatus();
+      taskEl.appendChild(statusEl);
       taskEl.appendChild(titleEl);
       taskEl.appendChild(descriptionEl);
       taskEl.appendChild(dueDateEl);
