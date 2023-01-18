@@ -49,6 +49,9 @@
       <button id = "add-task">Add Task</button>
       <form id="create-task-form">
         <h3>Create a new task</h3>
+        <label for="status">Status:</label>
+        <input type="checkbox" id="edit-status" name="status" value="true" autocomplete="off">
+        <br>
         <label for="task-title">Task Title:</label>
         <input type="text" id="task-title" name="task-title" autocomplete="off" required >
         <br>
@@ -66,6 +69,9 @@
       </form>
       <form id="edit-task-form">
         <h3> Edit task</h3>
+        <label for="status">Status:</label>
+        <input type="checkbox" id="edit-status" name="status" value="true" autocomplete="off">
+        <br>
         <label for="task-title">Task Title:</label>
         <input type="text" id="edit-task-title" name="task-title" autocomplete="off" required >
         <br>
