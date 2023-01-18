@@ -22,7 +22,7 @@ const task = (item) => {
         return important;
     }
 
-    const getstatus = () => {
+    const getStatus = () => {
         return status;
     }
 
@@ -50,7 +50,7 @@ const task = (item) => {
             getTaskDescription, 
             getDueDate,
             getImportance,
-            getstatus,
+            getStatus,
             setTaskDescription, 
             setTaskTitle,
             setDueDate,
