@@ -23,11 +23,17 @@ const project = (prjTitle) => {
         projectTasks = projectTasks.filter(task => task.getTaskTitle() !== tempTask.getTaskTitle());
     }
 
+    const getTaskByName = (taskName) => {
+        return projectTasks.find(p => p.getTaskTitle() === taskName);
+    }
+
     return { getProjectTasks, 
              getProjectTitle, 
              setProjectTasks, 
              setProjectTitle, 
-             deleteTask};
+             deleteTask,
+             getTaskByName
+            };
 
 };
 
