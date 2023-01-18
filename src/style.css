@@ -48,6 +48,14 @@ body {
     display: block;
 }
 
+#create-task-form, #edit-project-form{
+    display: none;
+}
+
+#create-task-form.visible, #edit-project-form.visible {
+    display: block;
+}
+
 #project-list {
     background-color: rgb(101, 205, 205);
 }

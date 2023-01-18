@@ -94,11 +94,33 @@ const Dom = () => {
     projectTitleHeader.innerText = project.getProjectTitle();
 
     project.getProjectTasks().forEach((task) => {
-        
+
       //display complete details of the task
       const taskEl = document.createElement("div");
-      taskEl.id = "task-list";
-      taskEl.innerText = task.getTaskTitle();
+      taskEl.className = "task-list";
+    
+        
+      let titleEl = document.createElement("p");
+      titleEl.innerText = task.getTaskTitle();
+      
+      let descriptionEl = document.createElement("p");
+      descriptionEl.innerText = task.getTaskDescription();
+      
+      let dueDateEl = document.createElement("p");
+      dueDateEl.innerText = task.getDueDate();
+      
+      let importanceEl = document.createElement("p");
+      importanceEl.innerText = task.getImportance();
+      
+    //   let statusEl = document.createElement("p");
+    //   statusEl.innerText = task.getStatus();
+      
+      taskEl.appendChild(titleEl);
+      taskEl.appendChild(descriptionEl);
+      taskEl.appendChild(dueDateEl);
+      taskEl.appendChild(importanceEl);
+      //taskEl.appendChild(statusEl);
+      
       taskContainer.appendChild(taskEl);
 
       //add event listener to task 3 dot icon element, when clicked call task edit form
@@ -121,6 +143,7 @@ const Dom = () => {
       lop.setProject(title);
       //display updated projects list
       displayProjects();
+      projectForm.classList.toggle("visible");
     });
   };
 
@@ -135,7 +158,8 @@ const Dom = () => {
     //when edit is clicked, form has to be prepopulated with already existing data.
     newProjectTitle.setAttribute("name", "selectedProjectTitle");
     selectedProject.setProjectTitle(newProjectTitle.value);
-    displayProjects();   
+    displayProjects();
+    editProjectForm.classList.toggle("visible");   
   };
 
   const deleteProjectFormCallBack = (e) => {
@@ -144,9 +168,10 @@ const Dom = () => {
             "#data-selected-project"
         ).innerText;
         let selectedProject = lop.getProjectByName(selectedProjectTitle);
-        console.log(selectedProject);
         lop.deleteProject(selectedProject);
         displayProjects();
+        editProjectForm.classList.toggle("visible");   
+       //once project is deleted, take user to home page.
   };
 
   //add event listener to edit project form and handle the same
