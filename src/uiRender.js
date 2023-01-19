@@ -15,7 +15,6 @@ const Dom = () => {
   const deleteProject = document.querySelector("#delete-project");
   const editTask = document.querySelector("#edit-task");
   const deleteTask = document.querySelector("#delete-task");
-
   let projectTitleHeader = document.querySelector(".project-title-header");
   let lop = listOfProjects();
   lop.setProject("Project 1");
@@ -150,6 +149,13 @@ const Dom = () => {
       displayProjects();
       projectForm.classList.toggle("visible");
     });
+
+    projectForm.addEventListener("reset", (e)=>{
+        e.preventDefault();
+        projectForm.classList.toggle("visible");
+    })
+
+
   };
 
   const renameProjectFormCallBack = (e) => {
@@ -161,7 +167,7 @@ const Dom = () => {
     let editProjectTitle = document.getElementById("edit-project-title");
 
     //when edit is clicked, form has to be prepopulated with already existing data.
-    editProjectTitle.placeholder = selectedProjectTitle;
+    //editProjectTitle.placeholder = selectedProjectTitle;
     selectedProject.setProjectTitle(editProjectTitle.value);
     displayProjects();
     editProjectForm.classList.toggle("visible");   
@@ -179,6 +185,9 @@ const Dom = () => {
     //once project is deleted, take user to home page.
   };
 
+  const resetProjectEditFormCallBack = () => {
+    editProjectForm.classList.toggle("visible");
+  };
   //add event listener to edit project form and handle the same
   const projectEditFormEventListener = (editEl) => {
 
@@ -192,7 +201,8 @@ const Dom = () => {
 
     //when delete is clicked, call delete function (deleteProject)
     deleteProject.addEventListener("click", deleteProjectFormCallBack);
-
+    editProjectForm.removeEventListener("reset", resetProjectEditFormCallBack);
+    editProjectForm.addEventListener("reset", resetProjectEditFormCallBack);
   };
 
   const taskFormCallback = (e) => {
@@ -201,13 +211,15 @@ const Dom = () => {
     const description = document.getElementById("task-description").value;
     const dueDate = document.getElementById("due-date").value;
     const important = document.getElementById("important").value;
-    const tempTask = task({ title, description, dueDate, important });
+    const status = document.getElementById("status").value;
+    const tempTask = task({ title, description, dueDate, important,status });
     let selectedProjectTitle = document.querySelector(
       "#data-selected-project"
     ).innerText;
     let selectedProject = lop.getProjectByName(selectedProjectTitle);
       selectedProject.setProjectTasks(tempTask);
       displayTasks(selectedProject);
+      taskForm.classList.toggle("visible");
       taskForm.reset();
   };
 
@@ -218,6 +230,10 @@ const Dom = () => {
     taskForm.removeEventListener("submit", taskFormCallback);
     // Add new event listener for task form submission
     taskForm.addEventListener("submit", taskFormCallback);
+
+    taskForm.addEventListener("reset", ()=> {
+        taskForm.classList.toggle("visible");
+    })
     
   };
 
@@ -229,6 +245,7 @@ const Dom = () => {
     const description = document.getElementById("edit-task-description").value;
     const dueDate = document.getElementById("edit-due-date").value;
     const important = document.getElementById("edit-important").value;
+    const status = document.getElementById("edit-status").value;
     let selectedProjectTitle = document.querySelector(
         "#data-selected-project"
       ).innerText;
@@ -241,11 +258,12 @@ const Dom = () => {
     selectedTask.setTaskTitle(title);
     selectedTask.setDueDate(dueDate);
     selectedTask.setImportance(important);
+    selectedTask.setStatus(status);
 
     displayTasks(lop.getProjectByName(selectedProjectTitle));
     editTaskForm.reset();
     editTaskForm.classList.toggle("visible");
-  }
+  };
 
   const deleteTaskFormCallBack = (e) => {
     e.preventDefault();
@@ -260,8 +278,11 @@ const Dom = () => {
     lop.getProjectByName(selectedProjectTitle).deleteTask(selectedTask);
     displayTasks(lop.getProjectByName(selectedProjectTitle));
     editTaskForm.classList.toggle("visible");
-  }
+  };
 
+  const resetTaskEditFormCallBack = () => {
+        editTaskForm.classList.toggle("visible");
+  };
   //add event listener to edit task form and handle the same
   const taskEditFormEventListener = (editEl, titleEl) => {
 
@@ -280,9 +301,12 @@ const Dom = () => {
     //when edit clicked, call setProjectTitle function
     editTask.addEventListener("click", editTaskFormCallBack);
 
+    deleteTask.removeEventListener("click", deleteTaskFormCallBack);
     //when delete is clicked, call delete function (deleteProject)
     deleteTask.addEventListener("click", deleteTaskFormCallBack);
 
+    editTaskForm.removeEventListener("reset",resetTaskEditFormCallBack);
+    editTaskForm.addEventListener("reset",resetTaskEditFormCallBack);
     //display task form and populate with already existing data
   };
   return { display };
