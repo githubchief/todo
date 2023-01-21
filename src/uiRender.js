@@ -1,5 +1,6 @@
 import { listOfProjects } from "./listOfProjects";
 import { task } from "./task";
+//import { storage } from "./storage";
 import { project } from "./project";
 
 const Dom = () => {
@@ -80,7 +81,7 @@ const Dom = () => {
         // }
       });
       //event listener to edit and delete the project
-      editEl.addEventListener("click", projectEditFormEventListener(editEl));
+      editEl.addEventListener("click", projectEditFormEventListener(editEl, titleEl));
       projectContainer.appendChild(projectEl);
     });
   };
@@ -101,8 +102,8 @@ const Dom = () => {
       taskEl.className = "task-list";
     
         
-      let titleEl = document.createElement("p");
-      titleEl.innerText = task.getTaskTitle();
+      let taskTitleEl = document.createElement("p");
+      taskTitleEl.innerText = task.getTaskTitle();
       
       let descriptionEl = document.createElement("p");
       descriptionEl.innerText = task.getTaskDescription();
@@ -118,13 +119,13 @@ const Dom = () => {
       let statusEl = document.createElement("p");
       statusEl.innerText = task.getStatus();
       taskEl.appendChild(statusEl);
-      taskEl.appendChild(titleEl);
+      taskEl.appendChild(taskTitleEl);
       taskEl.appendChild(descriptionEl);
       taskEl.appendChild(dueDateEl);
       taskEl.appendChild(importanceEl);
       taskEl.appendChild(editEl);
       //add event listener to task 3 dot icon element, when clicked call task edit form
-      editEl.addEventListener("click", taskEditFormEventListener(editEl, titleEl));
+      editEl.addEventListener("click", taskEditFormEventListener(editEl, taskTitleEl));
       taskContainer.appendChild(taskEl);
 
       
@@ -145,6 +146,7 @@ const Dom = () => {
       //when project title is submitted, call setproject to create a project and push it to the listofprojects.
       const title = document.getElementById("project-title").value;
       lop.setProject(title);
+      //storage.saveProject(title) ;
       //display updated projects list
       displayProjects();
       projectForm.classList.toggle("visible");
@@ -167,7 +169,7 @@ const Dom = () => {
     let editProjectTitle = document.getElementById("edit-project-title");
 
     //when edit is clicked, form has to be prepopulated with already existing data.
-    //editProjectTitle.placeholder = selectedProjectTitle;
+    editProjectTitle.placeholder = selectedProjectTitle;
     selectedProject.setProjectTitle(editProjectTitle.value);
     displayProjects();
     editProjectForm.classList.toggle("visible");   
@@ -189,11 +191,13 @@ const Dom = () => {
     editProjectForm.classList.toggle("visible");
   };
   //add event listener to edit project form and handle the same
-  const projectEditFormEventListener = (editEl) => {
+  const projectEditFormEventListener = (editEl, titleEl) => {
 
+    let editProjectTitle = document.getElementById("edit-project-title");
     //display edit and delete buttons
     editEl.addEventListener("click", ()=> {
         editProjectForm.classList.toggle("visible");
+        editProjectTitle.value = titleEl.innerText;
     });
 
     //when edit clicked, call setProjectTitle function
@@ -210,8 +214,8 @@ const Dom = () => {
     const title = document.getElementById("task-title").value;
     const description = document.getElementById("task-description").value;
     const dueDate = document.getElementById("due-date").value;
-    const important = document.getElementById("important").value;
-    const status = document.getElementById("status").value;
+    const important = document.getElementById("important").checked;
+    const status = document.getElementById("status").checked;
     const tempTask = task({ title, description, dueDate, important,status });
     let selectedProjectTitle = document.querySelector(
       "#data-selected-project"
@@ -219,8 +223,10 @@ const Dom = () => {
     let selectedProject = lop.getProjectByName(selectedProjectTitle);
       selectedProject.setProjectTasks(tempTask);
       displayTasks(selectedProject);
-      taskForm.classList.toggle("visible");
+      debugger;
       taskForm.reset();
+      
+      taskForm.classList.toggle("visible");
   };
 
   //add event listener to task-addition form and handle the same
@@ -243,9 +249,9 @@ const Dom = () => {
     
     const title = document.getElementById("edit-task-title").value;
     const description = document.getElementById("edit-task-description").value;
-    const dueDate = document.getElementById("edit-due-date").value;
-    const important = document.getElementById("edit-important").value;
-    const status = document.getElementById("edit-status").value;
+    const dueDate = document.getElementById("edit-due-date").value || "no due date";
+    const important = document.getElementById("edit-important").checked;
+    const status = document.getElementById("edit-status").checked;
     let selectedProjectTitle = document.querySelector(
         "#data-selected-project"
       ).innerText;
@@ -259,10 +265,9 @@ const Dom = () => {
     selectedTask.setDueDate(dueDate);
     selectedTask.setImportance(important);
     selectedTask.setStatus(status);
-
+    
     displayTasks(lop.getProjectByName(selectedProjectTitle));
     editTaskForm.reset();
-    editTaskForm.classList.toggle("visible");
   };
 
   const deleteTaskFormCallBack = (e) => {
@@ -284,7 +289,7 @@ const Dom = () => {
         editTaskForm.classList.toggle("visible");
   };
   //add event listener to edit task form and handle the same
-  const taskEditFormEventListener = (editEl, titleEl) => {
+  const taskEditFormEventListener = (editEl, taskTitleEl) => {
 
     //display edit and delete buttons
     editEl.addEventListener("click", ()=> {
@@ -293,7 +298,25 @@ const Dom = () => {
         if (temp) {
           temp.removeAttribute("id");
         } 
-    titleEl.setAttribute("id", "data-selected-task");
+        taskTitleEl.setAttribute("id", "data-selected-task");
+
+        //display task form and populate with already existing data
+        let selectedProjectTitle = document.querySelector(
+            "#data-selected-project"
+          ).innerText;
+
+        let title = document.getElementById("edit-task-title");
+        let description = document.getElementById("edit-task-description");
+        let dueDate = document.getElementById("edit-due-date");
+        let important = document.getElementById("edit-important");
+        let status = document.getElementById("edit-status");
+
+        let tempTask = lop.getProjectByName(selectedProjectTitle).getTaskByName(taskTitleEl.innerText);
+        title.value = tempTask.getTaskTitle();
+        description.value = tempTask.getTaskDescription();
+        dueDate.value = tempTask.getDueDate();
+        important.checked = tempTask.getImportance();
+        status.checked = tempTask.getStatus();
     });
     
     //when edit clicked, call setProjectTitle function
@@ -307,7 +330,7 @@ const Dom = () => {
 
     editTaskForm.removeEventListener("reset",resetTaskEditFormCallBack);
     editTaskForm.addEventListener("reset",resetTaskEditFormCallBack);
-    //display task form and populate with already existing data
+    
   };
   return { display };
 };
