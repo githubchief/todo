@@ -4,9 +4,8 @@ import { task } from "./task";
 
 const storage = () => {
     
-    //initialisation
-    //localStorage.setItem('lop',JSON.stringify(" "));
-
+    //localStorage.setItem('lop',JSON.stringify(""));
+    
     const saveListOfProjects = (data) => {
         localStorage.setItem('lop', JSON.stringify(data));
         console.log(JSON.parse(localStorage.getItem('lop')));
