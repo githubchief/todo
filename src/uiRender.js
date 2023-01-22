@@ -49,7 +49,7 @@ const Dom = () => {
   };
 
   const displayProjects = () => {
-    let prjtList = lop.getProjects();
+    debugger;
     while (projectContainer.firstChild) {
       projectContainer.removeChild(projectContainer.firstChild);
     }
