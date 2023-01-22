@@ -1,6 +1,6 @@
 import { listOfProjects } from "./listOfProjects";
 import { task } from "./task";
-//import { storage } from "./storage";
+  import { storage } from "./storage";
 import { project } from "./project";
 
 const Dom = () => {
@@ -17,25 +17,23 @@ const Dom = () => {
   const editTask = document.querySelector("#edit-task");
   const deleteTask = document.querySelector("#delete-task");
   let projectTitleHeader = document.querySelector(".project-title-header");
+  let storedListOfProjects = storage();
   let lop = listOfProjects();
-  lop.setProject("Project 1");
-  lop.setProject("Project 2");
-  lop.setProject("Project 3");
+  // let iTask = {
+  //   title: "odin1",
+  //   description: "to do list",
+  // };
 
-  let iTask = {
-    title: "odin1",
-    description: "to do list",
-  };
+  // let jTask = {
+  //   title: "odin2",
+  //   description: "to do list",
+  // };
 
-  let jTask = {
-    title: "odin2",
-    description: "to do list",
-  };
-
-  lop.getProjectByName("Project 1").setProjectTasks(task(iTask));
-  lop.getProjectByName("Project 1").setProjectTasks(task(jTask));
+  // lop.getProjectByName("Project 1").setProjectTasks(task(iTask));
+  // lop.getProjectByName("Project 1").setProjectTasks(task(jTask));
 
   const display = () => {
+  
     displayProjects();
 
     addProject.addEventListener("click", () => {
@@ -50,6 +48,9 @@ const Dom = () => {
 
   const displayProjects = () => {
     debugger;
+    let storedListOfProjects = storage();
+    let templop = storedListOfProjects.getListOfProjects();
+    let prjtList = templop.getProjects();
     while (projectContainer.firstChild) {
       projectContainer.removeChild(projectContainer.firstChild);
     }
@@ -141,12 +142,13 @@ const Dom = () => {
 
   //add event listener to project-addition form and handle the same
   const projectFormEventListener = () => {
+    debugger;
     projectForm.addEventListener("submit", (e) => {
       e.preventDefault();
       //when project title is submitted, call setproject to create a project and push it to the listofprojects.
       const title = document.getElementById("project-title").value;
-      lop.setProject(title);
-      //storage.saveProject(title) ;
+      //lop.setProject(title);
+      storedListOfProjects.saveProject(title) ;
       //display updated projects list
       displayProjects();
       projectForm.classList.toggle("visible");
@@ -156,9 +158,7 @@ const Dom = () => {
         e.preventDefault();
         projectForm.classList.toggle("visible");
     })
-
-
-  };
+ };
 
   const renameProjectFormCallBack = (e) => {
     e.preventDefault();
