@@ -47,8 +47,7 @@ const Dom = () => {
   };
 
   const displayProjects = () => {
-    debugger;
-    let storedListOfProjects = storage();
+
     let templop = storedListOfProjects.getListOfProjects();
     let prjtList = templop.getProjects();
     while (projectContainer.firstChild) {
@@ -142,7 +141,7 @@ const Dom = () => {
 
   //add event listener to project-addition form and handle the same
   const projectFormEventListener = () => {
-    debugger;
+    
     projectForm.addEventListener("submit", (e) => {
       e.preventDefault();
       //when project title is submitted, call setproject to create a project and push it to the listofprojects.
@@ -223,7 +222,7 @@ const Dom = () => {
     let selectedProject = lop.getProjectByName(selectedProjectTitle);
       selectedProject.setProjectTasks(tempTask);
       displayTasks(selectedProject);
-      debugger;
+      
       taskForm.reset();
       
       taskForm.classList.toggle("visible");
