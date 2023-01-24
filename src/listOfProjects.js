@@ -1,10 +1,10 @@
-import { project } from "./project";
+//import { project } from "./project";
 
 const listOfProjects = (projectList=[]) => {
 
-    const setProject = (prjTitle) => {
-        let temp = project(prjTitle);
-        projectList.push(temp);
+    const setProject = (project) => {
+        //let temp = project(prjTitle);
+        projectList.push(project);
     }
 
     const getProjects = () => {
