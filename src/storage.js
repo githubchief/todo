@@ -5,6 +5,7 @@ import { task } from "./task";
 const storage = () => {
     
    // localStorage.setItem('lop',JSON.stringify(lop.projectList));
+   localStorage.setItem('lop', JSON.stringify(" hi "));
     let prjList =JSON.parse(localStorage.getItem('lop'));
     
     let lop = listOfProjects(prjList);
