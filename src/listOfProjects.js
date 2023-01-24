@@ -1,8 +1,6 @@
 import { project } from "./project";
 
-const listOfProjects = () => {
-
-    let projectList=[];
+const listOfProjects = (projectList=[]) => {
 
     const setProject = (prjTitle) => {
         let temp = project(prjTitle);
@@ -21,7 +19,7 @@ const listOfProjects = () => {
             return projectList.find(p => p.getProjectTitle() === prjName);
     }
 
-    return {setProject, getProjects, deleteProject, getProjectByName};
+    return {projectList, setProject, getProjects, deleteProject, getProjectByName};
 
 };
 
