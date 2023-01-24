@@ -5,18 +5,19 @@ import { task } from "./task";
 const storage = () => {
     
    // localStorage.setItem('lop',JSON.stringify(lop.projectList));
-   localStorage.setItem('lop', JSON.stringify(" hi "));
-    let prjList =JSON.parse(localStorage.getItem('lop'));
+   let prjList = [];
+   localStorage.setItem('lop', JSON.stringify(prjList));
+   prjList =JSON.parse(localStorage.getItem('lop'));
     
     let lop = listOfProjects(prjList);
-    console.log(lop.projectList);
+    //console.log(lop.projectList);
     const saveListOfProjects = (data) => {
         localStorage.setItem('lop', JSON.stringify(data));
-        console.log(JSON.parse(localStorage.getItem('lop')));
+        //console.log(JSON.parse(localStorage.getItem('lop')));
     }
 
     const getListOfProjects = () => {
-        console.log(JSON.parse(localStorage.getItem('lop')));
+        //console.log(JSON.parse(localStorage.getItem('lop')));
         //let lop = Object.assign(listOfProjects.projectList, JSON.parse(localStorage.getItem('lop'))) ;
         let prjList =JSON.parse(localStorage.getItem('lop'));
         let lop = listOfProjects(prjList);
