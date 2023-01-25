@@ -147,7 +147,9 @@ const Dom = () => {
       //when project title is submitted, call setproject to create a project and push it to the listofprojects.
       const title = document.getElementById("project-title").value;
       //lop.setProject(title);
-      storedListOfProjects.saveProject(title) ;
+
+      let newProject = project(title);
+      storedListOfProjects.saveProject(newProject) ;
       //display updated projects list
       displayProjects();
       projectForm.classList.toggle("visible");

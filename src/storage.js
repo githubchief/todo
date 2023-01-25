@@ -7,9 +7,9 @@ const storage = () => {
    // localStorage.setItem('lop',JSON.stringify(lop.projectList));
    let prjList = [];
    localStorage.setItem('lop', JSON.stringify(prjList));
-   prjList =JSON.parse(localStorage.getItem('lop'));
+//    prjList =JSON.parse(localStorage.getItem('lop'));
     
-    let lop = listOfProjects(prjList);
+//     let lop = listOfProjects(prjList);
     //console.log(lop.projectList);
     const saveListOfProjects = (data) => {
         localStorage.setItem('lop', JSON.stringify(data));
@@ -23,18 +23,46 @@ const storage = () => {
         let lop = listOfProjects(prjList);
         // console.log(typeof(lop));
         // console.log(typeof(prjList));
-        console.log(lop.getProjects());
-        lop.setProject( lop.getProjects().map((prj) => prj.getProjectTitle()));
-        lop.getProjects().forEach((prj => prj.setProjectTasks(prj.getProjectTasks().map((tempTask)=> Object.assign(task, tempTask)))));
+        // console.log(prjList);
+        // console.log(lop);
+        // console.log(lop.projectList);
+        // console.log(lop.getProjects());
+
+        lop.getProjects().forEach(prj => {
+            lop.setProject(project(prj));
+        });
+        
+        // lop.setProject( lop.projectList.map((prj) => {
+        //     prj.getProjectTitle();
+        // })
+        // );
+        console.log(lop);
+        console.log(lop.projectList);
+        let counter = 0;
+        lop.projectList.forEach(prj => {
+            
+            //counter++;
+            if (counter++ == 0){
+                return;
+            }
+               console.log(prj.getProjectTitle());
+        });
+
+        lop.getProjects().forEach((prj => {
+            prj.getProjectTasks().forEach(tempTask => {
+                prj.setProjectTasks(Object.assign(task, tempTask));
+            });
+            
+        })); 
+        //prj.setProjectTasks(prj.getProjectTasks().map((tempTask)=> Object.assign(task, tempTask)))
         return lop;
     }
 
-    const saveProject = (prjTitle) => {
-        debugger;
-        const lop = getListOfProjects();
-        lop.setProject(prjTitle);
-        console.log(lop);
-        saveListOfProjects(lop);
+    const saveProject = (newProject) => {
+        
+        let lop = getListOfProjects();
+        lop.setProject(newProject);
+        saveListOfProjects(lop.projectList);
     }
 
     return {saveListOfProjects,
