@@ -35,15 +35,16 @@ const storage = () => {
         lop.getProjects().forEach(prj => {
             console.log("setting project...");
             console.log(prj);
-            lopWithProjectProperties.setProject(project(prj));
+            lopWithProjectProperties.setProject(prj);
             console.log("project setting completed");
         });
         
         //snippet to check if project object in the lop has all the member function properties.
         let counter = 0;
         lopWithProjectProperties.getProjects().forEach(prj => {
+            console.log(prj);
             console.log("inside projects", counter);
-            console.log(prj.getProjectTitle());
+            console.log(prj.getProjectTitle()); 
             counter++;
         });
 
