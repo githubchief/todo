@@ -148,8 +148,8 @@ const Dom = () => {
       const title = document.getElementById("project-title").value;
       //lop.setProject(title);
 
-      let newProject = project(title);
-      storedListOfProjects.saveProject(newProject) ;
+     //let newProject = project(title);
+      storedListOfProjects.saveProject(title) ;
       //display updated projects list
       displayProjects();
       projectForm.classList.toggle("visible");

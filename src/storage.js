@@ -4,65 +4,64 @@ import { task } from "./task";
 
 const storage = () => {
     
-   // localStorage.setItem('lop',JSON.stringify(lop.projectList));
-   let prjList = [];
-   localStorage.setItem('lop', JSON.stringify(prjList));
-//    prjList =JSON.parse(localStorage.getItem('lop'));
-    
-//     let lop = listOfProjects(prjList);
-    //console.log(lop.projectList);
     const saveListOfProjects = (data) => {
         localStorage.setItem('lop', JSON.stringify(data));
-        //console.log(JSON.parse(localStorage.getItem('lop')));
+        console.log("saving lop...");
+        console.log((localStorage.getItem('lop')));
     }
 
     const getListOfProjects = () => {
-        //console.log(JSON.parse(localStorage.getItem('lop')));
-        //let lop = Object.assign(listOfProjects.projectList, JSON.parse(localStorage.getItem('lop'))) ;
-        let prjList =JSON.parse(localStorage.getItem('lop'));
-        let lop = listOfProjects(prjList);
-        // console.log(typeof(lop));
-        // console.log(typeof(prjList));
-        // console.log(prjList);
-        // console.log(lop);
-        // console.log(lop.projectList);
-        // console.log(lop.getProjects());
+        
+        let prjList;
 
+        //if localstorage is empty return a empty listofProjects
+        if(localStorage.getItem('lop') === null ) {
+            console.log("prjlist is null");
+            let lop=listOfProjects([]);
+            console.log(lop);
+            return lop;
+        } else {
+            console.log((localStorage.getItem('lop')));
+            prjList = JSON.parse(localStorage.getItem('lop'));
+            console.log("Project list is not empty...")
+        }
+        console.log(prjList);
+        let lop = listOfProjects(prjList.projectList);
+        console.log(lop.getProjects());
+
+        
+        //adding project object properties to the listofprojects from localstorage 
+        let lopWithProjectProperties=listOfProjects([]);
         lop.getProjects().forEach(prj => {
-            lop.setProject(project(prj));
+            console.log("setting project...");
+            console.log(prj);
+            lopWithProjectProperties.setProject(project(prj));
+            console.log("project setting completed");
         });
         
-        // lop.setProject( lop.projectList.map((prj) => {
-        //     prj.getProjectTitle();
-        // })
-        // );
-        console.log(lop);
-        console.log(lop.projectList);
+        //snippet to check if project object in the lop has all the member function properties.
         let counter = 0;
-        lop.projectList.forEach(prj => {
-            
-            //counter++;
-            if (counter++ == 0){
-                return;
-            }
-               console.log(prj.getProjectTitle());
+        lopWithProjectProperties.getProjects().forEach(prj => {
+            console.log("inside projects", counter);
+            console.log(prj.getProjectTitle());
+            counter++;
         });
 
-        lop.getProjects().forEach((prj => {
-            prj.getProjectTasks().forEach(tempTask => {
-                prj.setProjectTasks(Object.assign(task, tempTask));
-            });
+        // lop.getProjects().forEach((prj => {
+        //     prj.getProjectTasks().forEach(tempTask => {
+        //         prj.setProjectTasks(Object.assign(task, tempTask));
+        //     });
             
-        })); 
+        // })); 
         //prj.setProjectTasks(prj.getProjectTasks().map((tempTask)=> Object.assign(task, tempTask)))
-        return lop;
+        return lopWithProjectProperties;
     }
 
-    const saveProject = (newProject) => {
-        
+    const saveProject = (newProjectTitle) => {
+        //console.log(newProject.getProjectTitle());
         let lop = getListOfProjects();
-        lop.setProject(newProject);
-        saveListOfProjects(lop.projectList);
+        lop.setProject(newProjectTitle);
+        saveListOfProjects(lop);
     }
 
     return {saveListOfProjects,
