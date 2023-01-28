@@ -21,7 +21,7 @@ const storage = () => {
             console.log(lop);
             return lop;
         } else {
-            console.log((localStorage.getItem('lop')));
+            console.log(localStorage.getItem('lop'));
             prjList = JSON.parse(localStorage.getItem('lop'));
             console.log("Project list is not empty...")
         }
@@ -62,7 +62,7 @@ const storage = () => {
         //console.log(newProject.getProjectTitle());
         let lop = getListOfProjects();
         lop.setProject(newProjectTitle);
-        saveListOfProjects(lop);
+        saveListOfProjects(lop.projectList);
     }
 
     return {saveListOfProjects,
