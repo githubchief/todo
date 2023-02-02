@@ -57,11 +57,31 @@ const storage = () => {
         lop.getProjectByName(project.getProjectTitle()).setProjectTitle(projectTitle);
         saveListOfProjects(lop.projectList);
     }
+
+    const removeProject = (project) => {
+        let lop = getListOfProjects();
+        lop.deleteProject(project);
+        saveListOfProjects(lop.projectList);
+    }
+
+    // const deleteProject = (project) => {
+    //     let lop = getListOfProjects();
+
+    //     saveListOfProjects(lop.projectList);
+    // }
+
+    // const deleteProject = (project) => {
+    //     let lop = getListOfProjects();
+
+    //     saveListOfProjects(lop.projectList);
+    // }
+
     return {saveListOfProjects,
             getListOfProjects,
             saveProject,
             saveTask,
-            renameProject
+            renameProject,
+            removeProject
             }; 
 }
 

@@ -169,8 +169,10 @@ const Dom = () => {
     let selectedProjectTitle = document.querySelector(
         "#data-selected-project"
     ).innerText;
-    let selectedProject = lop.getProjectByName(selectedProjectTitle);
-    lop.deleteProject(selectedProject);
+    let selectedProject = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle);
+    //lop.deleteProject(selectedProject);
+    
+    storedListOfProjects.removeProject(selectedProject);
     displayProjects();
     editProjectForm.classList.toggle("visible");   
     //once project is deleted, take user to home page.
