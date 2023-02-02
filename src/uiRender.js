@@ -151,7 +151,7 @@ const Dom = () => {
     let selectedProjectTitle = document.querySelector(
        "#data-selected-project"
         ).innerText;
-    let selectedProject = storedListOfProjects.getProjectByName(selectedProjectTitle);
+    let selectedProject = lop.getProjectByName(selectedProjectTitle);
     let editProjectTitle = document.getElementById("edit-project-title");
 
     //when edit is clicked, form has to be prepopulated with already existing data.
