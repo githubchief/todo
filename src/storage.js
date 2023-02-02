@@ -52,10 +52,16 @@ const storage = () => {
         saveListOfProjects(lop.projectList);
     }
 
+    const renameProject = (project, projectTitle) => {
+        let lop = getListOfProjects();
+        lop.getProjectByName(project.getProjectTitle()).setProjectTitle(projectTitle);
+        saveListOfProjects(lop.projectList);
+    }
     return {saveListOfProjects,
             getListOfProjects,
             saveProject,
-            saveTask
+            saveTask,
+            renameProject
             }; 
 }
 

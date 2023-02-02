@@ -151,12 +151,15 @@ const Dom = () => {
     let selectedProjectTitle = document.querySelector(
        "#data-selected-project"
         ).innerText;
-    let selectedProject = lop.getProjectByName(selectedProjectTitle);
+    let selectedProject = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle);
     let editProjectTitle = document.getElementById("edit-project-title");
 
     //when edit is clicked, form has to be prepopulated with already existing data.
     editProjectTitle.placeholder = selectedProjectTitle;
-    selectedProject.setProjectTitle(editProjectTitle.value);
+
+   //selectedProject.setProjectTitle(editProjectTitle.value);
+
+    storedListOfProjects.renameProject(selectedProject, editProjectTitle.value)
     displayProjects();
     editProjectForm.classList.toggle("visible");   
   };
