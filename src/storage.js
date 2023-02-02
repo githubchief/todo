@@ -21,7 +21,7 @@ const storage = () => {
         //creating lop from stored projectlists
         lop = listOfProjects(JSON.parse(prjList)); 
 
-        //creating projects to the restored lop with project properties
+        //creating projects (title alone) to the restored lop with project properties
         let lopProperties = listOfProjects ();
         lop.getProjects().forEach(prjString => {
             lopProperties.setProject(project({
@@ -29,7 +29,7 @@ const storage = () => {
             }))
         });
         
-        //creating task to the restored project with task properties
+        //creating task to restored projects with task properties
         lop.getProjects().forEach(project => {
             for(let taskCount = 0; taskCount < project.projectTasks.length; taskCount++ )
             {   
