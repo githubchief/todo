@@ -1,6 +1,6 @@
 import { listOfProjects } from "./listOfProjects";
 import { task } from "./task";
-  import { storage } from "./storage";
+import { storage } from "./storage";
 import { project } from "./project";
 
 const Dom = () => {
@@ -19,42 +19,30 @@ const Dom = () => {
   let projectTitleHeader = document.querySelector(".project-title-header");
   let storedListOfProjects = storage();
   let lop = listOfProjects();
-  // let iTask = {
-  //   title: "odin1",
-  //   description: "to do list",
-  // };
-
-  // let jTask = {
-  //   title: "odin2",
-  //   description: "to do list",
-  // };
-
-  // lop.getProjectByName("Project 1").setProjectTasks(task(iTask));
-  // lop.getProjectByName("Project 1").setProjectTasks(task(jTask));
-
+  
   const display = () => {
   
     displayProjects();
-
     addProject.addEventListener("click", () => {
       projectForm.classList.toggle("visible");
     });
-
     addTask.addEventListener("click", () => {
         taskForm.classList.toggle("visible");
-      });
+    });
     projectFormEventListener();
+
   };
 
   const displayProjects = () => {
 
-    let templop = storedListOfProjects.getListOfProjects();
-    let prjtList = templop.getProjects();
+    let projects = storedListOfProjects.getListOfProjects();
+    let prjtList = projects.getProjects();
     while (projectContainer.firstChild) {
       projectContainer.removeChild(projectContainer.firstChild);
     }
 
     prjtList.forEach((project) => {
+
       const projectEl = document.createElement("div");
       projectEl.className = "project-list";
       let iconEl = document.createElement("i");
@@ -75,11 +63,8 @@ const Dom = () => {
         }
         titleEl.setAttribute("id", "data-selected-project");
         displayTasks(project);
-        // if (!taskFormEventAdded) {
-        //   taskFormEventAdded = true;
-        //   taskFormEventListener(projectEl);
-        // }
       });
+
       //event listener to edit and delete the project
       editEl.addEventListener("click", projectEditFormEventListener(editEl, titleEl));
       projectContainer.appendChild(projectEl);
@@ -95,8 +80,9 @@ const Dom = () => {
     //project header displayed above the list of tasks
     projectTitleHeader.innerText = project.getProjectTitle();
 
-    project.getProjectTasks().forEach((task) => {
 
+    project.getProjectTasks().forEach((task) => {
+  
       //display complete details of the task
       const taskEl = document.createElement("div");
       taskEl.className = "task-list";
@@ -144,13 +130,12 @@ const Dom = () => {
     
     projectForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      //when project title is submitted, call setproject to create a project and push it to the listofprojects.
-      const title = document.getElementById("project-title").value;
-      //lop.setProject(title);
-
-     //let newProject = project(title);
-      storedListOfProjects.saveProject(title) ;
-      //display updated projects list
+      const newProjectTitle = document.getElementById("project-title").value;
+      let newProject = project({
+        title: newProjectTitle,
+      });
+      storedListOfProjects.saveProject(newProject);
+      
       displayProjects();
       projectForm.classList.toggle("visible");
     });
@@ -158,15 +143,15 @@ const Dom = () => {
     projectForm.addEventListener("reset", (e)=>{
         e.preventDefault();
         projectForm.classList.toggle("visible");
-    })
- };
+    });
+  };
 
   const renameProjectFormCallBack = (e) => {
     e.preventDefault();
     let selectedProjectTitle = document.querySelector(
        "#data-selected-project"
         ).innerText;
-    let selectedProject = lop.getProjectByName(selectedProjectTitle);
+    let selectedProject = storedListOfProjects.getProjectByName(selectedProjectTitle);
     let editProjectTitle = document.getElementById("edit-project-title");
 
     //when edit is clicked, form has to be prepopulated with already existing data.
@@ -212,22 +197,24 @@ const Dom = () => {
 
   const taskFormCallback = (e) => {
     e.preventDefault();
-    const title = document.getElementById("task-title").value;
-    const description = document.getElementById("task-description").value;
+    const taskTitle = document.getElementById("task-title").value;
+    const taskDescription = document.getElementById("task-description").value;
     const dueDate = document.getElementById("due-date").value;
     const important = document.getElementById("important").checked;
     const status = document.getElementById("status").checked;
-    const tempTask = task({ title, description, dueDate, important,status });
+    console.log(taskTitle)
+    const newTask = task({ taskTitle, taskDescription, dueDate, important,status });
+    console.log(newTask.getTaskTitle());
     let selectedProjectTitle = document.querySelector(
       "#data-selected-project"
     ).innerText;
-    let selectedProject = lop.getProjectByName(selectedProjectTitle);
-      selectedProject.setProjectTasks(tempTask);
-      displayTasks(selectedProject);
-      
-      taskForm.reset();
-      
-      taskForm.classList.toggle("visible");
+    let selectedProject = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle);
+    
+    storedListOfProjects.saveTask(selectedProject, newTask)
+    
+    displayTasks(storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle));
+    taskForm.reset();  
+    taskForm.classList.toggle("visible");
   };
 
   //add event listener to task-addition form and handle the same
