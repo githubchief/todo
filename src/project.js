@@ -33,13 +33,14 @@ const project = (project) => {
             projectTasks,
         }
     }
-    return { getProjectTasks, 
-             getProjectTitle, 
-             setProjectTasks, 
-             setProjectTitle, 
-             deleteTask,
-             getTaskByName,
-             toJSON
+    return {projectTasks, 
+            getProjectTasks, 
+            getProjectTitle, 
+            setProjectTasks, 
+            setProjectTitle, 
+            deleteTask,
+            getTaskByName,
+            toJSON
             };
 
 };
