@@ -4,70 +4,58 @@ import { task } from "./task";
 
 const storage = () => {
     
-    const saveListOfProjects = (data) => {
-        localStorage.setItem('lop', JSON.stringify(data));
-        console.log("saving lop...");
-        console.log((localStorage.getItem('lop')));
+    const saveListOfProjects = (lop) => {
+        localStorage.setItem('lop', JSON.stringify(lop));
     }
 
     const getListOfProjects = () => {
         
-        let prjList;
-
+        let prjList = localStorage.getItem('lop') ;
+        let lop ;
         //if localstorage is empty return a empty listofProjects
-        if(localStorage.getItem('lop') === null ) {
-            console.log("prjlist is null");
-            let lop=listOfProjects([]);
-            console.log(lop);
+        if(prjList === null ) {
+            lop =listOfProjects([]);
             return lop;
-        } else {
-            console.log(localStorage.getItem('lop'));
-            prjList = JSON.parse(localStorage.getItem('lop'));
-            console.log("Project list is not empty...")
-        }
-        console.log(prjList);
-        let lop = listOfProjects(prjList.projectList);
-        console.log(lop.getProjects());
+        } 
 
-        
-        //adding project object properties to the listofprojects from localstorage 
-        let lopWithProjectProperties=listOfProjects([]);
-        lop.getProjects().forEach(prj => {
-            console.log("setting project...");
-            console.log(prj);
-            lopWithProjectProperties.setProject(prj);
-            console.log("project setting completed");
+        //creating lop from stored projectlists
+        lop = listOfProjects(JSON.parse(prjList)); 
+
+        //creating projects to the restored lop with project properties
+        let lopProperties = listOfProjects ();
+        lop.getProjects().forEach(prjString => {
+            lopProperties.setProject(project({
+                title : prjString.title
+            }))
         });
         
-        //snippet to check if project object in the lop has all the member function properties.
-        let counter = 0;
-        lopWithProjectProperties.getProjects().forEach(prj => {
-            console.log(prj);
-            console.log("inside projects", counter);
-            console.log(prj.getProjectTitle()); 
-            counter++;
+        //creating task to the restored project with task properties
+        lop.getProjects().forEach(project => {
+            for(let taskCount = 0; taskCount < project.projectTasks.length; taskCount++ )
+            {   
+                let newTask = task(project.projectTasks[taskCount]);
+                lopProperties.getProjectByName(project.title).setProjectTasks(newTask);
+            }
         });
-
-        // lop.getProjects().forEach((prj => {
-        //     prj.getProjectTasks().forEach(tempTask => {
-        //         prj.setProjectTasks(Object.assign(task, tempTask));
-        //     });
-            
-        // })); 
-        //prj.setProjectTasks(prj.getProjectTasks().map((tempTask)=> Object.assign(task, tempTask)))
-        return lopWithProjectProperties;
+        return lopProperties;
     }
 
-    const saveProject = (newProjectTitle) => {
-        //console.log(newProject.getProjectTitle());
+    const saveProject = (newProject) => {
         let lop = getListOfProjects();
-        lop.setProject(newProjectTitle);
+        lop.setProject(newProject);
+        saveListOfProjects(lop.projectList);
+    }
+
+    const saveTask = (project, task) => {
+        let lop = getListOfProjects();
+        lop.getProjectByName(project.getProjectTitle()).setProjectTasks(task);
         saveListOfProjects(lop.projectList);
     }
 
     return {saveListOfProjects,
             getListOfProjects,
-            saveProject
+            saveProject,
+            saveTask
             }; 
 }
 
