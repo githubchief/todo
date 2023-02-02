@@ -251,15 +251,21 @@ const Dom = () => {
     let selectedTaskTitle = document.querySelector(
         "#data-selected-task"
       ).innerText;
-    let selectedTask = lop.getProjectByName(selectedProjectTitle).getTaskByName(selectedTaskTitle);
+    let selectedTask = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle).getTaskByName(selectedTaskTitle);
+    let selectedProject = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle);
+    // selectedTask.setTaskDescription(description);
+    // selectedTask.setTaskTitle(title);
+    // selectedTask.setDueDate(dueDate);
+    // selectedTask.setImportance(important);
+    // selectedTask.setStatus(status);
     
-    selectedTask.setTaskDescription(description);
-    selectedTask.setTaskTitle(title);
-    selectedTask.setDueDate(dueDate);
-    selectedTask.setImportance(important);
-    selectedTask.setStatus(status);
-    
-    displayTasks(lop.getProjectByName(selectedProjectTitle));
+    storedListOfProjects.setTaskDescription(selectedProject, selectedTask, description);
+    storedListOfProjects.setTaskTitle(selectedProject, selectedTask, title);
+    storedListOfProjects.setDueDate(selectedProject, selectedTask, dueDate);
+    storedListOfProjects.setImportance(selectedProject, selectedTask, important);
+    storedListOfProjects.setStatus(selectedProject, selectedTask, status);
+
+    displayTasks(storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle));
     editTaskForm.reset();
   };
 
@@ -304,7 +310,7 @@ const Dom = () => {
         let important = document.getElementById("edit-important");
         let status = document.getElementById("edit-status");
 
-        let tempTask = lop.getProjectByName(selectedProjectTitle).getTaskByName(taskTitleEl.innerText);
+        let tempTask = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle).getTaskByName(taskTitleEl.innerText);
         title.value = tempTask.getTaskTitle();
         description.value = tempTask.getTaskDescription();
         dueDate.value = tempTask.getDueDate();

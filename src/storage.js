@@ -64,12 +64,35 @@ const storage = () => {
         saveListOfProjects(lop.projectList);
     }
 
-    // const deleteProject = (project) => {
-    //     let lop = getListOfProjects();
+    const setTaskDescription = (project, task, description) => {
+        let lop = getListOfProjects();
+        (lop.getProjectByName(project.getProjectTitle()).getTaskByName(task.getTaskTitle())).setTaskDescription(description);
+        saveListOfProjects(lop.projectList);
+    }
 
-    //     saveListOfProjects(lop.projectList);
-    // }
+    const setTaskTitle = (project, task, title) => {
+        let lop = getListOfProjects();
+        (lop.getProjectByName(project.getProjectTitle()).getTaskByName(task.getTaskTitle())).setTaskTitle(title);
+        saveListOfProjects(lop.projectList);
+    }
 
+    const setDueDate = (project, task, dueDate) => {
+        let lop = getListOfProjects();
+        (lop.getProjectByName(project.getProjectTitle()).getTaskByName(task.getTaskTitle())).setDueDate(dueDate);
+        saveListOfProjects(lop.projectList);
+    }
+
+    const setImportance = (project, task, importance) => {
+        let lop = getListOfProjects();
+        (lop.getProjectByName(project.getProjectTitle()).getTaskByName(task.getTaskTitle())).setImportance(importance);
+        saveListOfProjects(lop.projectList);
+    }
+
+    const setStatus = (project, task, status) => {
+        let lop = getListOfProjects();
+        (lop.getProjectByName(project.getProjectTitle()).getTaskByName(task.getTaskTitle())).setStatus(status);
+        saveListOfProjects(lop.projectList);
+    }
     // const deleteProject = (project) => {
     //     let lop = getListOfProjects();
 
@@ -81,7 +104,12 @@ const storage = () => {
             saveProject,
             saveTask,
             renameProject,
-            removeProject
+            removeProject,
+            setTaskDescription,
+            setTaskTitle,
+            setDueDate,
+            setImportance,
+            setStatus
             }; 
 }
 
