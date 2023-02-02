@@ -1,7 +1,7 @@
 const task = (item) => {
     
-    let taskTitle = item.title;
-    let taskDescription = item.description;
+    let taskTitle = item.taskTitle;
+    let taskDescription = item.taskDescription;
     let dueDate = item.dueDate|| "no due date";
     let important = item.important || false;
     let status = item.status|| false;
