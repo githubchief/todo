@@ -1,27 +1,29 @@
-import { project } from "./project";
+const listOfProjects = (projectList=[]) => {
 
-const listOfProjects = () => {
-
-    let projectList=[];
-
-    const setProject = (prjTitle) => {
-        let temp = project(prjTitle);
-        projectList.push(temp);
+    let setProject = (prj) => {
+        projectList.push(prj);
     }
 
-    const getProjects = () => {
+    let getProjects = () => {
         return projectList;
     }
 
-    const deleteProject = (tempPrj) => {
+    let deleteProject = (tempPrj) => {
         projectList = projectList.filter(prj => prj.getProjectTitle() !== tempPrj.getProjectTitle());
     }
 
-    const getProjectByName = (prjName) => {
+    let getProjectByName = (prjName) => {
             return projectList.find(p => p.getProjectTitle() === prjName);
     }
 
-    return {setProject, getProjects, deleteProject, getProjectByName};
+    let toJSON = () => {
+        
+        return {
+            projectList
+        };
+    }
+
+    return {projectList, setProject, getProjects, deleteProject, getProjectByName, toJSON};
 
 };
 

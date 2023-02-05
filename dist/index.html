@@ -5,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <title>To Do</title>
+<title>To Do</title>
+
     <script defer src="main.js"></script>    
 </head>
 <body>
@@ -25,9 +26,8 @@
       </div>
       <div class="project-container">
         <div><h2>PROJECTS</h2></div>
-        <div id = "project-list-container"></div>
-        <button id = "add-project" class="accordion"><i class="fa fa-plus-circle"></i>Add Project</button>
-        <div class="panel">
+        <div id="project-list-container"></div>
+        <button id="add-project" class="add-button"><i class="fa fa-plus-circle"></i>Add Project</button>
         <form id="create-project-form">
           <h3>Create a new project</h3>
           <label for="project-title" style="display: none;">Project Title:</label>
@@ -36,8 +36,6 @@
           <button type="submit" class="add">Add</button>
           <button type="reset" class="cancel">Cancel</button>
         </form>
-      </div>
-      
      <form id="edit-project-form">
           <h3> <i class="fa fa-edit" aria-hidden="true"></i>Edit Project</h3>
           <label for="edit-project-title">Project Title:</label>
@@ -53,8 +51,7 @@
     <div class="right-panel">
       <div class="project-title-header"></div>
       <div id="task-list-container"></div>
-      <button id = "add-task" class="accordion"><i class="fa fa-plus-circle"></i>Add Task</button>
-      <div class="panel">
+      <button id="add-task" class="add-button" class="task"><i class="fa fa-plus-circle"></i>Add Task</button>
       <form id="create-task-form">
         <h3>Create a new task</h3>
         <label for="status">Status:</label>
@@ -75,20 +72,6 @@
         <button type="submit" class="add">Add</button>
         <button type="reset" class="cancel">Cancel</button>
       </form>
-    </div>
-     <!-- Modal -->
-     <button type="button" class="btn btn-info btn-lg popup" onclick="myFunction()" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-  <!-- <div class="modal fade"  id="edit-task-form" role="dialog" style="display: none;">
-    <div class="modal-dialog"> -->
-      
-      <!-- Modal content-->
-      <!-- <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body" > -->
           <form id="edit-task-form">
             <h3> <i class="fa fa-edit" aria-hidden="true"></i>Edit task</h3>
             <label for="status">Status:</label>
@@ -106,41 +89,11 @@
             <label for="important">Important:</label>
             <input type="checkbox" id="edit-important" name="important" autocomplete="off">
             <br>
-            <button type="submit" id="edit-task">Edit</button>
-            <button type="reset">Cancel</button>
-            <button type="button" id ="delete-task">Delete</button>
+            <button type="submit" id="edit-task" class="add">Edit</button>
+            <button type="reset" class="cancel">Cancel</button>
+            <button type="button" id ="delete-task" class="delete">Delete</button>
           </form>
-        <!-- </div>
-         
-      </div>
-      
-    </div> -->
   </div>
-      
-    
-  
-  <script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
-    
-    for (i = 0; i < acc.length; i++) {
-      acc[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var panel = this.nextElementSibling;
-        if (panel.style.maxHeight) {
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        } 
-      });
-    }
-    </script>
-    <script>
-      // When the user clicks on <div>, open the popup
-      function myFunction() {
-        var popup = document.getElementById("edit-task-form");
-        popup.classList.toggle("visible");
-      }
-      </script>
+      </div>
 </body>
 </html>

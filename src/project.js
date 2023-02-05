@@ -1,7 +1,7 @@
-const project = (prjTitle) => {
+const project = (project) => {
 
-    let title = prjTitle;
-    let projectTasks = [];
+    let title = project.title;
+    let projectTasks = project.projectTasks || [];
 
     const getProjectTitle = () => {
         return title;
@@ -27,12 +27,20 @@ const project = (prjTitle) => {
         return projectTasks.find(p => p.getTaskTitle() === taskName);
     }
 
-    return { getProjectTasks, 
-             getProjectTitle, 
-             setProjectTasks, 
-             setProjectTitle, 
-             deleteTask,
-             getTaskByName
+    const toJSON = () => {
+        return {
+            title,
+            projectTasks,
+        }
+    }
+    return {projectTasks, 
+            getProjectTasks, 
+            getProjectTitle, 
+            setProjectTasks, 
+            setProjectTitle, 
+            deleteTask,
+            getTaskByName,
+            toJSON
             };
 
 };

@@ -1,7 +1,7 @@
 const task = (item) => {
     
-    let taskTitle = item.title;
-    let taskDescription = item.description;
+    let taskTitle = item.taskTitle;
+    let taskDescription = item.taskDescription;
     let dueDate = item.dueDate|| "no due date";
     let important = item.important || false;
     let status = item.status|| false;
@@ -46,6 +46,15 @@ const task = (item) => {
          status = temp;
     }
 
+    const toJSON = () => {
+        return {
+            taskTitle,
+            taskDescription,
+            dueDate,
+            important,
+            status
+        }
+    }
     return {getTaskTitle, 
             getTaskDescription, 
             getDueDate,
@@ -55,7 +64,8 @@ const task = (item) => {
             setTaskTitle,
             setDueDate,
             setImportance,
-            setStatus
+            setStatus,
+            toJSON
             };
 };
 
