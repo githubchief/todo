@@ -76,7 +76,7 @@ const Dom = () => {
     while (taskContainer.firstChild) {
       taskContainer.removeChild(taskContainer.firstChild);
     }
-    
+  
     //project header displayed above the list of tasks
     projectTitleHeader.innerText = project.getProjectTitle();
 
@@ -113,14 +113,10 @@ const Dom = () => {
       //add event listener to task 3 dot icon element, when clicked call task edit form
       editEl.addEventListener("click", taskEditFormEventListener(editEl, taskTitleEl));
       taskContainer.appendChild(taskEl);
-
-      
-    //   editEl.addEventListener("click", (e) => {
-    //     taskEditFormEventListener(editEl);
-    //   });
     });
 
     //after all tasks, show add task button
+    addTask.className += " visible";
     //call event listener to include task form
     taskFormEventListener();
   };
@@ -156,9 +152,6 @@ const Dom = () => {
 
     //when edit is clicked, form has to be prepopulated with already existing data.
     editProjectTitle.placeholder = selectedProjectTitle;
-
-   //selectedProject.setProjectTitle(editProjectTitle.value);
-
     storedListOfProjects.renameProject(selectedProject, editProjectTitle.value)
     displayProjects();
     editProjectForm.classList.toggle("visible");   
@@ -170,8 +163,6 @@ const Dom = () => {
         "#data-selected-project"
     ).innerText;
     let selectedProject = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle);
-    //lop.deleteProject(selectedProject);
-    
     storedListOfProjects.removeProject(selectedProject);
     displayProjects();
     editProjectForm.classList.toggle("visible");   
@@ -253,11 +244,6 @@ const Dom = () => {
       ).innerText;
     let selectedTask = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle).getTaskByName(selectedTaskTitle);
     let selectedProject = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle);
-    // selectedTask.setTaskDescription(description);
-    // selectedTask.setTaskTitle(title);
-    // selectedTask.setDueDate(dueDate);
-    // selectedTask.setImportance(important);
-    // selectedTask.setStatus(status);
     
     storedListOfProjects.setTaskDescription(selectedProject, selectedTask, description);
     storedListOfProjects.setTaskTitle(selectedProject, selectedTask, title);
@@ -277,10 +263,11 @@ const Dom = () => {
     let selectedTaskTitle = document.querySelector(
         "#data-selected-task"
       ).innerText;
-    let selectedTask = lop.getProjectByName(selectedProjectTitle).getTaskByName(selectedTaskTitle);
-
-    lop.getProjectByName(selectedProjectTitle).deleteTask(selectedTask);
-    displayTasks(lop.getProjectByName(selectedProjectTitle));
+    
+    let selectedProject = storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle);
+    let selectedTask = selectedProject.getTaskByName(selectedTaskTitle);
+    storedListOfProjects.deleteTask(selectedProject,selectedTask);
+    displayTasks(storedListOfProjects.getListOfProjects().getProjectByName(selectedProjectTitle));
     editTaskForm.classList.toggle("visible");
   };
 
