@@ -35,7 +35,9 @@ body {
 .project-title-header {
     font-size: 2rem;
 }
+
 /* #edit-project-form{
+
     display: none;
 }
 #edit-project-form.visible {
@@ -46,8 +48,10 @@ body {
 }
 #edit-task-form.visible {
     display: block !important;
+
 }  */
   #create-project-form, #edit-project-form{
+
     display: none;
 }
 
@@ -60,8 +64,10 @@ body {
 }
 
 #create-task-form.visible, #edit-task-form.visible {
+
     display: block !important;
 }  
+
 
 .task-list {
     display: flex;
@@ -74,24 +80,30 @@ body {
 }
 body{padding: 0;margin: 0;font-family: 'Open Sans', sans-serif;}
 .home-container, .project-container{    margin: 0 15px;}
+
 .home-container > :first-child, .project-container > :first-child, .project-container .add-button, .right-panel .add-button{    font-size: 18px;
+
     font-weight: bold;
     text-align: left;
     padding: 20px 15px 10px;
 }
+
 
 .right-panel .add-button{    display: none;
 }
 
 .right-panel .add-button.visible{    display: block;
 }
+
 .home-container div{font-size:16px;
     font-weight: normal;
     text-align: left;
     padding: 12px 15px;
 }
 .fa{padding-right: 10px; color: #1d3557;}
+
 .home-container div:hover, .project-container .project-list:hover, .add-button:hover{background-color:#c1e4e5;cursor: pointer;
+
     border-radius: 5px;}
 #add-task:hover{background-color:#d0ebec;cursor: pointer;
     border-radius: 5px;}
@@ -116,7 +128,9 @@ h2{    margin: 0;
     height: 100vh;padding:10px 20px;    
 }
 
+
 .add-button{    background: transparent;
+
     outline: none;
     border: none;
     font-weight: bold;width: 100%;
